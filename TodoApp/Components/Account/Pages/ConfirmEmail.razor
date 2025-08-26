@@ -1,0 +1,111 @@
+﻿@page "/Account/ConfirmEmail"
+
+@using System.Text
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using TodoApp.Data
+
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IdentityRedirectManager RedirectManager
+@inject NavigationManager NavigationManager
+
+<PageTitle>Confirm Email</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Email Confirmation</h3>
+                </div>
+                <div class="card-body text-center">
+                    @if (isProcessing)
+                    {
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <p>Verifying your email...</p>
+                    }
+                    else if (isSuccess)
+                    {
+                        <div class="mb-4">
+                            <i class="bi bi-check-circle-fill" style="font-size: 3rem; color: var(--bs-success);"></i>
+                        </div>
+                        <h4 class="text-success">Email Successfully Verified!</h4>
+                        <p>Your email has been confirmed. You are being redirected to set up additional security...</p>
+                    }
+                    else
+                    {
+                        <div class="mb-4">
+                            <i class="bi bi-x-circle-fill" style="font-size: 3rem; color: var(--bs-danger);"></i>
+                        </div>
+                        <h4 class="text-danger">Verification Failed</h4>
+                        <p>@statusMessage</p>
+                        <a href="/" class="btn btn-primary">Return to Home</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? statusMessage;
+    private bool isProcessing = true;
+    private bool isSuccess = false;
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromQuery] private string? UserId { get; set; }
+
+    [SupplyParameterFromQuery] private string? Code { get; set; }
+
+    [SupplyParameterFromQuery] private string? ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (UserId is null || Code is null)
+        {
+            isProcessing = false;
+            RedirectManager.RedirectTo("");
+            return;
+        }
+
+        var user = await UserManager.FindByIdAsync(UserId);
+        if (user is null)
+        {
+            isProcessing = false;
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            statusMessage = $"Error loading user with ID {UserId}";
+            return;
+        }
+
+        var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
+        var result = await UserManager.ConfirmEmailAsync(user, code);
+        
+        isProcessing = false;
+        
+        if (result.Succeeded)
+        {
+            isSuccess = true;
+            statusMessage = "Thank you for confirming your email.";
+            
+            // Automatically sign in the user
+            await SignInManager.SignInAsync(user, isPersistent: false);
+            
+            // Allow the success message to be displayed briefly before redirecting
+            await Task.Delay(2000);
+            
+            // Redirect to enable authenticator page
+            NavigationManager.NavigateTo("Account/Manage/EnableAuthenticator");
+        }
+        else
+        {
+            statusMessage = "Error confirming your email.";
+        }
+    }
+
+}

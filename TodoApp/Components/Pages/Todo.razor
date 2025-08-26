@@ -1,0 +1,204 @@
+@page "/todo"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@using TodoApp.TodoData
+@using TodoApp.TodoData.Services
+@attribute [Authorize]
+@inject CprService CprService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>Todo - Blazor App</PageTitle>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="bi bi-check2-square me-2"></i>@(hasCpr ? "Todo List" : "Register CPR Number")</h3>
+                </div>
+                <div class="card-body">
+                    @if (isLoading)
+                    {
+                        <div class="d-flex justify-content-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    else if (!hasCpr)
+                    {
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="alert alert-info mb-4">
+                                    <p class="mb-0">Please register your CPR number to continue to the Todo list.</p>
+                                </div>
+                                
+                                @if (showError)
+                                {
+                                    <div class="alert alert-danger">
+                                        <p class="mb-0">@errorMessage</p>
+                                    </div>
+                                }
+
+                                <div class="mb-3">
+                                    <label for="cprInput" class="form-label">CPR Number (10 digits)</label>
+                                    <input id="cprInput" 
+                                           class="form-control" 
+                                           type="text" 
+                                           maxlength="10"
+                                           placeholder="Enter 10 digits"
+                                           @bind="inputValue" />
+                                    
+                                    @if (!string.IsNullOrEmpty(validationMessage))
+                                    {
+                                        <div class="text-danger mt-1">@validationMessage</div>
+                                    }
+                                    <small class="form-text text-muted">Enter exactly 10 digits with no spaces or hyphens.</small>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button @onclick="HandleSaveClick" class="btn btn-primary" disabled="@isSaving">
+                                        @if (isSaving)
+                                        {
+                                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                            <span>Saving...</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Save CPR Number</span>
+                                        }
+                                    </button>
+                                </div>
+                                
+                                <div class="mt-3 text-muted">
+                                    <small>Current value: @inputValue</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="lead text-center my-5">
+                            This is the Todo list page for future development.
+                        </p>
+                        <div class="text-center">
+                            <p>Your CPR number: @cprNumber</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool isLoading = true;
+    private bool hasCpr = false;
+    private bool isSaving = false;
+    private bool showError = false;
+    private string errorMessage = string.Empty;
+    private string validationMessage = string.Empty;
+    private string userId = string.Empty;
+    private string cprNumber = string.Empty;
+    private string inputValue = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            
+            if (!string.IsNullOrEmpty(userId))
+            {
+                hasCpr = await CprService.HasCprAsync(userId);
+                
+                if (hasCpr)
+                {
+                    var cpr = await CprService.GetCprAsync(userId);
+                    if (cpr != null)
+                    {
+                        cprNumber = cpr.CprNr;
+                    }
+                }
+            }
+        }
+        
+        isLoading = false;
+    }
+
+    private async Task HandleSaveClick()
+    {
+        Console.WriteLine($"Save button clicked, input value: {inputValue}");
+
+        // Clear previous validation messages
+        validationMessage = string.Empty;
+        showError = false;
+        
+        // Validate input
+        if (string.IsNullOrWhiteSpace(inputValue))
+        {
+            validationMessage = "CPR Number is required.";
+            return;
+        }
+        
+        if (inputValue.Length != 10)
+        {
+            validationMessage = "CPR Number must be exactly 10 digits.";
+            return;
+        }
+        
+        if (!System.Text.RegularExpressions.Regex.IsMatch(inputValue, "^[0-9]{10}$"))
+        {
+            validationMessage = "CPR Number must contain only numbers.";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            showError = true;
+            errorMessage = "User not authenticated. Please log in again.";
+            return;
+        }
+        
+        // Set saving state
+        isSaving = true;
+        StateHasChanged();
+        
+        try
+        {
+            Console.WriteLine($"Calling CprService.CreateCprAsync with userId: {userId}, CPR: {inputValue}");
+            bool result = await CprService.CreateCprAsync(userId, inputValue);
+            
+            if (result)
+            {
+                Console.WriteLine("CPR saved successfully");
+                hasCpr = true;
+                cprNumber = inputValue;
+                // Force a re-render
+                StateHasChanged();
+            }
+            else
+            {
+                Console.WriteLine("CPR save failed");
+                showError = true;
+                errorMessage = "Failed to save CPR number. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving CPR: {ex.Message}");
+            showError = true;
+            errorMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            isSaving = false;
+            StateHasChanged();
+        }
+    }
+}
