@@ -37,7 +37,7 @@ namespace TodoApp.TodoData.Migrations
                     b.HasIndex("CprNr")
                         .IsUnique();
 
-                    b.ToTable("Cprs", t =>
+                    b.ToTable("Cprs", null, t =>
                         {
                             t.HasCheckConstraint("CK_Cpr_CprNr_Format", "\"CprNr\" ~ '^[0-9]{10}$'");
                         });

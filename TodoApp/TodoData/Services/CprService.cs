@@ -40,5 +40,18 @@ namespace TodoApp.TodoData.Services
                 return false;
             }
         }
+
+        public async Task<bool> DeleteCprByUserIdAsync(string userId)
+        {
+            var cpr = await _context.Cprs.FirstOrDefaultAsync(c => c.UserId == userId);
+            if (cpr is null)
+            {
+                return false;
+            }
+
+            _context.Cprs.Remove(cpr);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

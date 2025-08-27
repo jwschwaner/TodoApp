@@ -3,16 +3,18 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
 @using TodoApp.Data
+@using TodoApp.TodoData.Services
 
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<DeletePersonalData> Logger
+@inject CprService CprService
 
 <PageTitle>Delete Personal Data</PageTitle>
 
-<StatusMessage Message="@message"/>
+<StatusMessage Message="@_message"/>
 
 <h3>Delete Personal Data</h3>
 
@@ -26,7 +28,7 @@
     <EditForm Model="Input" FormName="delete-user" OnValidSubmit="OnValidSubmitAsync" method="post">
         <DataAnnotationsValidator/>
         <ValidationSummary class="text-danger" role="alert"/>
-        @if (requirePassword)
+        @if (_requirePassword)
         {
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your password."/>
@@ -39,9 +41,9 @@
 </div>
 
 @code {
-    private string? message;
-    private ApplicationUser user = default!;
-    private bool requirePassword;
+    private string? _message;
+    private ApplicationUser _user = default!;
+    private bool _requirePassword;
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
@@ -49,20 +51,30 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Input ??= new();
-        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
-        requirePassword = await UserManager.HasPasswordAsync(user);
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        _requirePassword = await UserManager.HasPasswordAsync(_user);
     }
 
     private async Task OnValidSubmitAsync()
     {
-        if (requirePassword && !await UserManager.CheckPasswordAsync(user, Input.Password))
+        if (_requirePassword && !await UserManager.CheckPasswordAsync(_user, Input.Password))
         {
-            message = "Error: Incorrect password.";
+            _message = "Error: Incorrect password.";
             return;
         }
 
-        var result = await UserManager.DeleteAsync(user);
+        // Delete CPR (and cascading Todos) in the TodoDb before removing the Identity user account
+        try
+        {
+            _ = await CprService.DeleteCprByUserIdAsync(_user.Id);
+        }
+        catch (Exception ex)
+        {
+            // Log but continue with user deletion to avoid leaving the account partially deleted
+            Logger.LogWarning(ex, "Failed to delete CPR for user {UserId}", _user.Id);
+        }
+
+        var result = await UserManager.DeleteAsync(_user);
         if (!result.Succeeded)
         {
             throw new InvalidOperationException("Unexpected error occurred deleting user.");
@@ -70,7 +82,7 @@
 
         await SignInManager.SignOutAsync();
 
-        var userId = await UserManager.GetUserIdAsync(user);
+        var userId = await UserManager.GetUserIdAsync(_user);
         Logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
         RedirectManager.RedirectToCurrentPage();
@@ -80,5 +92,4 @@
     {
         [DataType(DataType.Password)] public string Password { get; set; } = "";
     }
-
 }
