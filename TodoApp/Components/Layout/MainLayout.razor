@@ -125,16 +125,7 @@
     private string GetUserDisplayText(AuthenticationState authState)
     {
         var username = authState.User.Identity?.Name ?? "User";
-        var roles = authState.User.Claims
-            .Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")
-            .Select(c => c.Value)
-            .ToArray();
-            
-        if (roles.Any())
-        {
-            return $"{username} ({string.Join(", ", roles)})";
-        }
-        
-        return username;
+        var isAdmin = authState.User.IsInRole("Admin");
+        return isAdmin ? $"{username} (Admin)" : username;
     }
 }

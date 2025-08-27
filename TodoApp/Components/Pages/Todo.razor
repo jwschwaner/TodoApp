@@ -32,7 +32,7 @@
                         <div class="mb-3">
                             <label for="newTodo" class="form-label">New Todo</label>
                             <div class="input-group">
-                                <input id="newTodo" class="form-control" @bind="_newTodoText" @bind:event="oninput" placeholder="What do you need to do?" maxlength="200" />
+                                <input id="newTodo" class="form-control" @bind="_newTodoText" @bind:event="oninput" placeholder="What do you need to do?" maxlength="200" @onkeydown="HandleNewTodoKeyDown" />
                                 <button class="btn btn-primary" @onclick="AddTodo" disabled="@(_isSavingTodo || string.IsNullOrWhiteSpace(_newTodoText))">
                                     @if (_isSavingTodo)
                                     {
@@ -204,6 +204,14 @@
         catch
         {
             // ignore for now
+        }
+    }
+
+    private async Task HandleNewTodoKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !_isSavingTodo && !string.IsNullOrWhiteSpace(_newTodoText))
+        {
+            await AddTodo();
         }
     }
 }
