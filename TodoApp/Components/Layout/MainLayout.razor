@@ -1,28 +1,32 @@
 ﻿@inherits LayoutComponentBase
-@using Microsoft.AspNetCore.Components.Authorization
-@using TodoApp.Data
-@using Microsoft.AspNetCore.Identity
 
 @inject NavigationManager NavigationManager
-@inject UserManager<ApplicationUser> UserManager
 
 <div class="page">
     <main>
         <div class="top-row px-4 justify-content-between">
-            <div>
+            <div class="d-flex align-items-center">
                 <a href="/todo" class="navbar-brand">
                     <i class="bi bi-check2-square me-2"></i>
                     <span class="fw-bold">Todo</span>
                 </a>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <a href="/admin/users" class="nav-link ms-3">
+                            <i class="bi bi-people me-1"></i>
+                            <span class="fw-bold">Users</span>
+                        </a>
+                    </Authorized>
+                </AuthorizeView>
             </div>
             
-            <AuthorizeView Context="topRowContext">
-                <Authorized>
+            <AuthorizeView>
+                <Authorized Context="authState">
                     <div class="d-flex align-items-center">
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle me-1"></i>
-                                @(GetUserDisplayText(topRowContext))
+                                @(GetUserDisplayText(authState))
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
