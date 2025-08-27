@@ -34,9 +34,8 @@ namespace TodoApp.TodoData
                 entity.Property(t => t.IsDone)
                     .IsRequired();
                     
-                // Configure the relationship with Cpr from the Todo side
                 entity.HasOne(t => t.Cpr)
-                    .WithMany(c => c.Todos)
+                    .WithMany()
                     .HasForeignKey(t => t.CprNr)
                     .HasPrincipalKey(c => c.CprNr)
                     .OnDelete(DeleteBehavior.Cascade);
@@ -59,13 +58,6 @@ namespace TodoApp.TodoData
                 
                 entity.HasIndex(c => c.CprNr)
                     .IsUnique();
-                
-                // Configure the relationship between Cpr and Todo
-                entity.HasMany(c => c.Todos)
-                    .WithOne(t => t.Cpr)
-                    .HasForeignKey(t => t.CprNr)
-                    .HasPrincipalKey(c => c.CprNr)
-                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

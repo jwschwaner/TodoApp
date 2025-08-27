@@ -28,8 +28,7 @@ namespace TodoApp.TodoData.Services
                 var cpr = new Cpr
                 {
                     UserId = userId,
-                    CprNr = cprNumber,
-                    Todos = new List<Todo>()
+                    CprNr = cprNumber
                 };
 
                 await _context.Cprs.AddAsync(cpr);

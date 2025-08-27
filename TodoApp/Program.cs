@@ -32,6 +32,8 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 
 // Register CprService
 builder.Services.AddScoped<CprService>();
+// Register TodoService
+builder.Services.AddScoped<TodoService>();
 
 // Configure Identity with roles
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
