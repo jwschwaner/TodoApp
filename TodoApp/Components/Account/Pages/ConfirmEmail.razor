@@ -20,7 +20,7 @@
                     <h3 class="mb-0">Email Confirmation</h3>
                 </div>
                 <div class="card-body text-center">
-                    @if (isProcessing)
+                    @if (_isProcessing)
                     {
                         <div class="d-flex justify-content-center mb-4">
                             <div class="spinner-border text-primary" role="status">
@@ -29,7 +29,7 @@
                         </div>
                         <p>Verifying your email...</p>
                     }
-                    else if (isSuccess)
+                    else if (_isSuccess)
                     {
                         <div class="mb-4">
                             <i class="bi bi-check-circle-fill" style="font-size: 3rem; color: var(--bs-success);"></i>
@@ -43,7 +43,7 @@
                             <i class="bi bi-x-circle-fill" style="font-size: 3rem; color: var(--bs-danger);"></i>
                         </div>
                         <h4 class="text-danger">Verification Failed</h4>
-                        <p>@statusMessage</p>
+                        <p>@_statusMessage</p>
                         <a href="/" class="btn btn-primary">Return to Home</a>
                     }
                 </div>
@@ -53,9 +53,9 @@
 </div>
 
 @code {
-    private string? statusMessage;
-    private bool isProcessing = true;
-    private bool isSuccess = false;
+    private string? _statusMessage;
+    private bool _isProcessing = true;
+    private bool _isSuccess;
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
@@ -69,7 +69,7 @@
     {
         if (UserId is null || Code is null)
         {
-            isProcessing = false;
+            _isProcessing = false;
             RedirectManager.RedirectTo("");
             return;
         }
@@ -77,21 +77,21 @@
         var user = await UserManager.FindByIdAsync(UserId);
         if (user is null)
         {
-            isProcessing = false;
+            _isProcessing = false;
             HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            statusMessage = $"Error loading user with ID {UserId}";
+            _statusMessage = $"Error loading user with ID {UserId}";
             return;
         }
 
         var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
         var result = await UserManager.ConfirmEmailAsync(user, code);
         
-        isProcessing = false;
+        _isProcessing = false;
         
         if (result.Succeeded)
         {
-            isSuccess = true;
-            statusMessage = "Thank you for confirming your email.";
+            _isSuccess = true;
+            _statusMessage = "Thank you for confirming your email.";
             
             // Automatically sign in the user
             await SignInManager.SignInAsync(user, isPersistent: false);
@@ -104,7 +104,7 @@
         }
         else
         {
-            statusMessage = "Error confirming your email.";
+            _statusMessage = "Error confirming your email.";
         }
     }
 

@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using TodoApp.Data
+@using Microsoft.EntityFrameworkCore
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -43,6 +44,17 @@
                 <label for="Input.ConfirmPassword">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger"/>
             </div>
+            <div class="mb-3">
+                <label for="Input.Role" class="form-label">Role</label>
+                <InputSelect @bind-Value="Input.Role" id="Input.Role" class="form-select" aria-required="true">
+                    <option value="" disabled>Select a role</option>
+                    @foreach (var role in Roles)
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => Input.Role" class="text-danger"/>
+            </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </EditForm>
         <div class="mt-3">
@@ -59,13 +71,24 @@
 </div>
 
 @code {
-    private IEnumerable<IdentityError>? identityErrors;
+    private IEnumerable<IdentityError>? _identityErrors;
 
     [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
 
     [SupplyParameterFromQuery] private string? ReturnUrl { get; set; }
 
-    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+    private string? Message => _identityErrors is null ? null : $"Error: {string.Join(", ", _identityErrors.Select(error => error.Description))}";
+
+    private List<string> Roles { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load available roles (e.g., Admin, User) for selection
+        Roles = await RoleManager.Roles
+            .Select(r => r.Name!)
+            .OrderBy(n => n)
+            .ToListAsync();
+    }
 
     public async Task RegisterUser(EditContext editContext)
     {
@@ -78,14 +101,19 @@
 
         if (!result.Succeeded)
         {
-            identityErrors = result.Errors;
+            _identityErrors = result.Errors;
             return;
         }
 
         Logger.LogInformation("User created a new account with password.");
 
-        // Assign User role to the newly registered user
-        await UserManager.AddToRoleAsync(user, "User");
+        // Assign selected role (fallback to User if invalid/missing)
+        var roleToAssign = string.IsNullOrWhiteSpace(Input.Role) ? "User" : Input.Role;
+        if (!await RoleManager.RoleExistsAsync(roleToAssign))
+        {
+            roleToAssign = "User";
+        }
+        await UserManager.AddToRoleAsync(user, roleToAssign);
 
         var userId = await UserManager.GetUserIdAsync(user);
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
@@ -149,6 +177,10 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+
+        [Required(ErrorMessage = "Please select a role.")]
+        [Display(Name = "Role")]
+        public string Role { get; set; } = "";
     }
 
 }

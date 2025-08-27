@@ -73,3 +73,13 @@ appsettings.*.local.json
 ~$*
 *.tmp
 
+# Demo/Dev local settings
+UserSettings/
+.env
+.env.*
+
+# Local databases (sqlite)
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
