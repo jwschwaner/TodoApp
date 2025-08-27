@@ -1,0 +1,217 @@
+@page "/todo"
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@using TodoApp.TodoData.Services
+@attribute [Authorize]
+@rendermode InteractiveServer
+@inject CprService CprService
+@inject TodoService TodoService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>Todo</PageTitle>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="bi bi-check2-square me-2"></i>Todo List</h3>
+                </div>
+                <div class="card-body">
+                    @if (_isLoading)
+                    {
+                        <div class="d-flex justify-content-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                            <label for="newTodo" class="form-label">New Todo</label>
+                            <div class="input-group">
+                                <input id="newTodo" class="form-control" @bind="_newTodoText" @bind:event="oninput" placeholder="What do you need to do?" maxlength="200" @onkeydown="HandleNewTodoKeyDown" />
+                                <button class="btn btn-primary" @onclick="AddTodo" disabled="@(_isSavingTodo || string.IsNullOrWhiteSpace(_newTodoText))">
+                                    @if (_isSavingTodo)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        <span>Adding...</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Add</span>
+                                    }
+                                </button>
+                            </div>
+                            @if (!string.IsNullOrEmpty(_pageError))
+                            {
+                                <div class="text-danger mt-2">@_pageError</div>
+                            }
+                        </div>
+
+                        <div>
+                            @if (_todos.Count == 0)
+                            {
+                                <div class="text-muted">No todos yet. Add your first one above.</div>
+                            }
+                            else
+                            {
+                                <ul class="list-group">
+                                    @foreach (var t in _todos)
+                                    {
+                                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" checked="@t.IsDone" @onchange="(e => OnDoneChanged(e, t))" id="chk_@t.Id" />
+                                                <label class="form-check-label @(t.IsDone ? "text-decoration-line-through text-muted" : string.Empty)" for="chk_@t.Id">
+                                                    @t.Item
+                                                </label>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger" title="Delete" @onclick="(() => DeleteTodo(t))">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+
+                        <div class="mt-4 text-muted">
+                            <small>Your CPR number: @_cprNumber</small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool _isLoading = true;
+    private bool _isSavingTodo;
+    private string _userId = string.Empty;
+    private string _cprNumber = string.Empty;
+    private string _newTodoText = string.Empty;
+    private string _pageError = string.Empty;
+    private List<TodoApp.TodoData.Todo> _todos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            _userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(_userId))
+            {
+                var hasCpr = await CprService.HasCprAsync(_userId);
+
+                if (!hasCpr)
+                {
+                    // Redirect to CPR registration page if missing
+                    NavigationManager.NavigateTo("/cpr", true);
+                    return;
+                }
+
+                var cpr = await CprService.GetCprAsync(_userId);
+                if (cpr != null)
+                {
+                    _cprNumber = cpr.CprNr;
+                    // Load todos for this CPR
+                    _todos = await TodoService.GetTodosAsync(_cprNumber);
+                }
+            }
+        }
+
+        _isLoading = false;
+    }
+
+    private async Task AddTodo()
+    {
+        _pageError = string.Empty;
+        var text = _newTodoText.Trim();
+        if (string.IsNullOrEmpty(text))
+        {
+            _pageError = "Please enter a todo.";
+            return;
+        }
+
+        if (text.Length > 200)
+        {
+            _pageError = "Todo is too long (max 200 characters).";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(_cprNumber))
+        {
+            _pageError = "Missing CPR. Please reload.";
+            return;
+        }
+
+        _isSavingTodo = true;
+        try
+        {
+            var added = await TodoService.AddTodoAsync(_cprNumber, text);
+            _todos.Add(added);
+            _newTodoText = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            _pageError = $"Failed to add todo: {ex.Message}";
+        }
+        finally
+        {
+            _isSavingTodo = false;
+        }
+    }
+
+    private async Task OnDoneChanged(ChangeEventArgs e, TodoApp.TodoData.Todo todo)
+    {
+        var isDone = e.Value is bool b ? b : bool.TryParse(e.Value?.ToString(), out var parsed) && parsed;
+        await ToggleDone(todo, isDone);
+    }
+
+    private async Task ToggleDone(TodoApp.TodoData.Todo todo, bool isDone)
+    {
+        try
+        {
+            var ok = await TodoService.SetDoneAsync(todo.Id, isDone);
+            if (ok)
+            {
+                todo.IsDone = isDone;
+                StateHasChanged();
+            }
+        }
+        catch
+        {
+            // ignore for now or show a toast in future
+        }
+    }
+
+    private async Task DeleteTodo(TodoApp.TodoData.Todo todo)
+    {
+        try
+        {
+            var ok = await TodoService.DeleteAsync(todo.Id);
+            if (ok)
+            {
+                _todos.Remove(todo);
+            }
+        }
+        catch
+        {
+            // ignore for now
+        }
+    }
+
+    private async Task HandleNewTodoKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !_isSavingTodo && !string.IsNullOrWhiteSpace(_newTodoText))
+        {
+            await AddTodo();
+        }
+    }
+}

@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Identity
+@using TodoApp.Data
+@using TodoApp.Components.Account
+
+@inject NavigationManager NavigationManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+<CascadingAuthenticationState>
+    <AuthorizeRouteView RouteData="@RouteData" DefaultLayout="@DefaultLayout">
+        <NotAuthorized>
+            @if (context.User.Identity?.IsAuthenticated != true)
+            {
+                <RedirectToLogin />
+            }
+            else
+            {
+                <p class="alert alert-danger">You are not authorized to access this resource.</p>
+            }
+        </NotAuthorized>
+        <Authorizing>
+            <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <span class="ms-2">Authorizing...</span>
+            </div>
+        </Authorizing>
+    </AuthorizeRouteView>
+</CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public RouteData RouteData { get; set; } = default!;
+
+    [Parameter]
+    public Type DefaultLayout { get; set; } = default!;
+}

@@ -1,0 +1,167 @@
+﻿@page "/home"
+@using Microsoft.AspNetCore.Components.Authorization
+@using TodoApp.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Home - Modern Blazor App</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h2 class="mb-3">Welcome, @context.User.Identity?.Name!</h2>
+                            <p class="lead">
+                                You're authenticated and ready to use this modern Blazor application.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="bi bi-person-circle" style="font-size: 3rem; color: #0d6efd;"></i>
+                            </div>
+                            <h3 class="mb-3">Your Profile</h3>
+                            <p>Manage your personal information and account settings.</p>
+                            <a href="Account/Manage" class="btn btn-primary mt-2">
+                                <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="bi bi-shield-lock" style="font-size: 3rem; color: #0d6efd;"></i>
+                            </div>
+                            <h3 class="mb-3">Security</h3>
+                            <p>Set up two-factor authentication to protect your account.</p>
+                            <a href="Account/Manage/EnableAuthenticator" class="btn btn-primary mt-2">
+                                <i class="bi bi-shield-check me-2"></i>Configure 2FA
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-3">
+                                <i class="bi bi-envelope" style="font-size: 3rem; color: #0d6efd;"></i>
+                            </div>
+                            <h3 class="mb-3">Email Settings</h3>
+                            <p>Update your email preferences and notification settings.</p>
+                            <a href="Account/Manage/Email" class="btn btn-primary mt-2">
+                                <i class="bi bi-envelope-check me-2"></i>Manage Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <AuthorizeView Roles="Admin" Context="adminContext">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="mb-0"><i class="bi bi-gear me-2"></i>Admin Tools</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>As an administrator, you have access to additional features and settings.</p>
+                                <a href="admin" class="btn btn-outline-primary">
+                                    <i class="bi bi-gear-fill me-2"></i>Go to Admin Panel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </AuthorizeView>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h1 class="display-4 fw-bold">Welcome to Our Modern Blazor App</h1>
+                    <p class="lead my-4">
+                        A secure, modern web application built with Blazor, featuring user authentication, 
+                        email verification, and two-factor authentication.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <a href="Account/Register" class="btn btn-primary btn-lg px-4 me-md-2">
+                            <i class="bi bi-person-plus me-2"></i>Get Started
+                        </a>
+                        <a href="Account/Login" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow">
+                        <div class="card-body p-5 text-center">
+                            <h2 class="mb-4">Key Features</h2>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <i class="bi bi-shield-check text-primary" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5>Secure Authentication</h5>
+                                            <p class="text-muted">Industry-standard security protocols</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <i class="bi bi-phone text-primary" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5>Two-Factor Auth</h5>
+                                            <p class="text-muted">Extra layer of account security</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <i class="bi bi-people text-primary" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5>User Roles</h5>
+                                            <p class="text-muted">Role-based access control</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <i class="bi bi-envelope-check text-primary" style="font-size: 1.5rem;"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5>Email Verification</h5>
+                                            <p class="text-muted">Verify user identity by email</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>

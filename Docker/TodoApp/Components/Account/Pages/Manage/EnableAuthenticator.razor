@@ -1,0 +1,324 @@
+﻿@page "/Account/Manage/EnableAuthenticator"
+
+@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+@using System.Text
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Identity
+@using TodoApp.Data
+@using QRCoder
+@using System.Drawing
+@using System.IO
+
+@inject UserManager<ApplicationUser> UserManager
+@inject IdentityUserAccessor UserAccessor
+@inject UrlEncoder UrlEncoder
+@inject IdentityRedirectManager RedirectManager
+@inject ILogger<EnableAuthenticator> Logger
+
+<PageTitle>Configure authenticator app</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            @if (recoveryCodes is not null)
+            {
+                <ShowRecoveryCodes RecoveryCodes="recoveryCodes.ToArray()" StatusMessage="@message"/>
+            }
+            else
+            {
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Configure Authenticator App</h3>
+                    </div>
+                    <div class="card-body">
+                        <StatusMessage Message="@message"/>
+                        
+                        <div class="alert alert-info mb-4">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <i class="bi bi-shield-lock-fill" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Two-factor authentication adds an extra layer of security to your account. Once configured, you'll need to provide a verification code from your authenticator app whenever you sign in.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- All 3 steps in a single row -->
+                        <div class="row">
+                            <!-- Step 1 -->
+                            <div class="col-md-4">
+                                <div class="step-card">
+                                    <h5><span class="badge bg-primary rounded-circle me-2">1</span> Download an app</h5>
+                                    <div class="ms-3 mt-3">
+                                        <div class="app-options">
+                                            <div class="mb-2">
+                                                <div class="card bg-light">
+                                                    <div class="card-body py-2">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="mb-0">Microsoft</h6>
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="https://go.microsoft.com/fwlink/?Linkid=825072" class="btn btn-outline-primary" target="_blank">Android</a>
+                                                                <a href="https://go.microsoft.com/fwlink/?Linkid=825073" class="btn btn-outline-primary" target="_blank">iOS</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="card bg-light">
+                                                    <div class="card-body py-2">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="mb-0">Google</h6>
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="btn btn-outline-primary" target="_blank">Android</a>
+                                                                <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" class="btn btn-outline-primary" target="_blank">iOS</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2 -->
+                            <div class="col-md-4">
+                                <div class="step-card">
+                                    <h5><span class="badge bg-primary rounded-circle me-2">2</span> Scan QR code</h5>
+                                    <div class="ms-3 mt-3 text-center">
+                                        <div class="qr-code-container mb-2">
+                                            @if (!string.IsNullOrEmpty(qrCodeImageData))
+                                            {
+                                                <img src="@qrCodeImageData" alt="QR Code" class="qr-code-image" />
+                                            }
+                                            else
+                                            {
+                                                <div class="qr-code-placeholder d-flex align-items-center justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="key-container p-2 bg-light rounded">
+                                            <small class="text-muted">Or enter key manually:</small>
+                                            <code class="user-select-all d-block">@sharedKey</code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3 -->
+                            <div class="col-md-4">
+                                <div class="step-card">
+                                    <h5><span class="badge bg-primary rounded-circle me-2">3</span> Verify code</h5>
+                                    <div class="ms-3 mt-3">
+                                        <div class="verification-card p-3 bg-light rounded">
+                                            <p class="mb-3">Enter code from your app:</p>
+                                            <EditForm Model="Input" FormName="send-code" OnValidSubmit="OnValidSubmitAsync" method="post">
+                                                <DataAnnotationsValidator/>
+                                                <div class="input-group mb-2">
+                                                    <InputText @bind-Value="Input.Code" id="Input.Code" class="form-control" autocomplete="off" placeholder="6-digit code"/>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="bi bi-shield-check"></i>
+                                                    </button>
+                                                </div>
+                                                <ValidationMessage For="() => Input.Code" class="text-danger small"/>
+                                            </EditForm>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .step-card {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        padding: 1rem;
+        height: 100%;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    }
+    
+    .verification-card {
+        background-color: #f8f9fa;
+        border-left: 4px solid #0d6efd; /* Hard-coded primary color instead of var */
+    }
+    
+    .key-container {
+        border: 1px dashed #ced4da;
+        background-color: #f8f9fa;
+        font-size: 0.875rem;
+    }
+    
+    .badge.rounded-circle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+    }
+    
+    .qr-code-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .qr-code-image {
+        width: 180px;
+        height: 180px;
+        border: 1px solid #dee2e6;
+        padding: 5px;
+        background-color: white;
+    }
+    
+    .qr-code-placeholder {
+        width: 180px;
+        height: 180px;
+        border: 1px dashed #ced4da;
+        background-color: #f8f9fa;
+        margin: 0 auto;
+    }
+    
+    .app-options .card {
+        transition: all 0.2s ease;
+    }
+    
+    .app-options .card:hover {
+        transform: translateY(-2px);
+        border-color: #0d6efd; /* Hard-coded primary color instead of var */
+    }
+</style>
+
+@code {
+    private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
+    private string? message;
+    private ApplicationUser user = default!;
+    private string? sharedKey;
+    private string? authenticatorUri;
+    private string? qrCodeImageData;
+    private IEnumerable<string>? recoveryCodes;
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+
+        await LoadSharedKeyAndQrCodeUriAsync(user);
+        GenerateQrCode();
+    }
+
+    private void GenerateQrCode()
+    {
+        if (!string.IsNullOrEmpty(authenticatorUri))
+        {
+            using var qrGenerator = new QRCodeGenerator();
+            using var qrCodeData = qrGenerator.CreateQrCode(authenticatorUri, QRCodeGenerator.ECCLevel.Q);
+            using var qrCode = new BitmapByteQRCode(qrCodeData);
+            
+            var pixelsInModule = 20; // Size of each QR module (block)
+            byte[] qrCodeBytes = qrCode.GetGraphic(pixelsInModule);
+            
+            qrCodeImageData = $"data:image/png;base64,{Convert.ToBase64String(qrCodeBytes)}";
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        // Strip spaces and hyphens
+        var verificationCode = Input.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+
+        var is2faTokenValid = await UserManager.VerifyTwoFactorTokenAsync(
+            user, UserManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+
+        if (!is2faTokenValid)
+        {
+            message = "Error: Verification code is invalid.";
+            return;
+        }
+
+        await UserManager.SetTwoFactorEnabledAsync(user, true);
+        var userId = await UserManager.GetUserIdAsync(user);
+        Logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+
+        message = "Your authenticator app has been verified.";
+
+        if (await UserManager.CountRecoveryCodesAsync(user) == 0)
+        {
+            recoveryCodes = await UserManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+        }
+        else
+        {
+            RedirectManager.RedirectToWithStatus("Account/Manage/TwoFactorAuthentication", message, HttpContext);
+        }
+    }
+
+    private async ValueTask LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user)
+    {
+        // Load the authenticator key & QR code URI to display on the form
+        var unformattedKey = await UserManager.GetAuthenticatorKeyAsync(user);
+        if (string.IsNullOrEmpty(unformattedKey))
+        {
+            await UserManager.ResetAuthenticatorKeyAsync(user);
+            unformattedKey = await UserManager.GetAuthenticatorKeyAsync(user);
+        }
+
+        sharedKey = FormatKey(unformattedKey!);
+
+        var email = await UserManager.GetEmailAsync(user);
+        authenticatorUri = GenerateQrCodeUri(email!, unformattedKey!);
+    }
+
+    private string FormatKey(string unformattedKey)
+    {
+        var result = new StringBuilder();
+        int currentPosition = 0;
+        while (currentPosition + 4 < unformattedKey.Length)
+        {
+            result.Append(unformattedKey.AsSpan(currentPosition, 4)).Append(' ');
+            currentPosition += 4;
+        }
+
+        if (currentPosition < unformattedKey.Length)
+        {
+            result.Append(unformattedKey.AsSpan(currentPosition));
+        }
+
+        return result.ToString().ToLowerInvariant();
+    }
+
+    private string GenerateQrCodeUri(string email, string unformattedKey)
+    {
+        return string.Format(
+            CultureInfo.InvariantCulture,
+            AuthenticatorUriFormat,
+            UrlEncoder.Encode("Microsoft.AspNetCore.Identity.UI"),
+            UrlEncoder.Encode(email),
+            unformattedKey);
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Text)]
+        [Display(Name = "Verification Code")]
+        public string Code { get; set; } = "";
+    }
+}

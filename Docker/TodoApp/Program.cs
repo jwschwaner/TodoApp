@@ -9,55 +9,39 @@ using TodoApp.TodoData.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Kestrel with HTTPS certificate
+// Configure Kestrel with HTTPS certificate - let ASPNETCORE_URLS handle port binding
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    // Clear any default certificate configuration
-    serverOptions.ConfigurationLoader = null;
-    
-    // Get certificate configuration from user secrets
+    // Get certificate configuration from environment variables
     var certPath = builder.Configuration["Kestrel:Certificates:Default:Path"];
     var certPassword = builder.Configuration["Kestrel:Certificates:Default:Password"];
-    
+
     if (!string.IsNullOrEmpty(certPath) && !string.IsNullOrEmpty(certPassword))
     {
-        // Cross-platform path resolution
         var resolvedPath = ResolveCertificatePath(certPath);
-        
+
         Console.WriteLine($"Certificate path from config: {certPath}");
         Console.WriteLine($"Resolved certificate path: {resolvedPath}");
         Console.WriteLine($"Certificate exists: {File.Exists(resolvedPath)}");
-        
+
         if (File.Exists(resolvedPath))
         {
             try
             {
-                serverOptions.ListenLocalhost(5204); // HTTP
-                serverOptions.ListenLocalhost(7181, listenOptions =>
+                var certificate = System.Security.Cryptography.X509Certificates.X509CertificateLoader.LoadPkcs12FromFile(resolvedPath, certPassword);
+
+                serverOptions.ConfigureHttpsDefaults(httpsOptions =>
                 {
-                    // Use the modern X509CertificateLoader
-                    var certificate = System.Security.Cryptography.X509Certificates.X509CertificateLoader.LoadPkcs12FromFile(resolvedPath, certPassword);
-                    listenOptions.UseHttps(certificate);
+                    httpsOptions.ServerCertificate = certificate;
                 });
+
                 Console.WriteLine("HTTPS configured successfully!");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to load certificate: {ex.Message}");
-                Console.WriteLine("Running HTTP only.");
-                serverOptions.ListenLocalhost(5204); // HTTP only
             }
         }
-        else
-        {
-            Console.WriteLine("Certificate file not found. Running HTTP only.");
-            serverOptions.ListenLocalhost(5204); // HTTP only
-        }
-    }
-    else
-    {
-        Console.WriteLine("Certificate configuration not found. Running HTTP only.");
-        serverOptions.ListenLocalhost(5204); // HTTP only
     }
 });
 
@@ -65,7 +49,7 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 static string ResolveCertificatePath(string certPath)
 {
     Console.WriteLine($"Input path: '{certPath}'");
-    
+
     // Handle tilde (~) expansion on Unix-like systems (macOS/Linux)
     if (certPath.StartsWith("~/"))
     {
@@ -74,7 +58,7 @@ static string ResolveCertificatePath(string certPath)
         Console.WriteLine($"Tilde expansion: {homeDirectory} + {certPath.Substring(2)} = {resolvedPath}");
         return resolvedPath;
     }
-    
+
     // Handle Windows environment variables like %USERPROFILE%
     if (certPath.Contains('%'))
     {
@@ -82,7 +66,7 @@ static string ResolveCertificatePath(string certPath)
         Console.WriteLine($"Environment expansion: {certPath} -> {expandedPath}");
         return expandedPath;
     }
-    
+
     // Handle relative paths - make them absolute relative to user profile
     if (!Path.IsPathRooted(certPath))
     {
@@ -91,14 +75,11 @@ static string ResolveCertificatePath(string certPath)
         Console.WriteLine($"Relative path resolution: {homeDirectory} + {certPath} = {resolvedPath}");
         return resolvedPath;
     }
-    
+
     // Return absolute path as-is
     Console.WriteLine($"Absolute path returned as-is: {certPath}");
     return certPath;
 }
-
-// Disable IIS integration (Kestrel only)
-builder.WebHost.UseKestrel();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -127,7 +108,7 @@ builder.Services.AddScoped<CprService>();
 builder.Services.AddScoped<TodoService>();
 
 // Configure Identity with roles
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
     })
@@ -153,7 +134,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnet/aspnetcore-hsts.
     app.UseHsts();
 }
 

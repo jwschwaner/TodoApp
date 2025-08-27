@@ -1,0 +1,254 @@
+@page "/admin/users"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using TodoApp.Data
+@using TodoApp.TodoData.Services
+@using Microsoft.EntityFrameworkCore
+@attribute [Authorize(Roles = "Admin")]
+@rendermode InteractiveServer
+@inject UserManager<ApplicationUser> UserManager
+@inject CprService CprService
+@inject TodoService TodoService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ILogger<AdminUsers> Logger
+
+<PageTitle>Users</PageTitle>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0"><i class="bi bi-people me-2"></i>Users</h3>
+                    <small class="text-white-50">Manage users, view and delete their todos</small>
+                </div>
+                <div class="card-body">
+                    @if (_isLoading)
+                    {
+                        <div class="d-flex justify-content-center my-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @if (!string.IsNullOrEmpty(_pageError))
+                        {
+                            <div class="alert alert-danger">@_pageError</div>
+                        }
+
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>UserId</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var u in _users)
+                                {
+                                    <tr class="@(u.Id == _selectedUserId ? "table-active" : string.Empty)">
+                                        <td>@u.Email</td>
+                                        <td class="text-muted"><small>@u.Id</small></td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-secondary me-2" title="View todos" @onclick="(() => LoadUserTodos(u.Id))">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Delete user" @onclick="(() => ConfirmDeleteUser(u.Id))">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="mb-3"><i class="bi bi-card-checklist me-2"></i>User Todos</h5>
+                            @if (string.IsNullOrEmpty(_selectedUserId))
+                            {
+                                <div class="text-muted">Select a user to view their todos.</div>
+                            }
+                            else if (_selectedUserHasNoCpr)
+                            {
+                                <div class="alert alert-info">Selected user has no CPR registered.</div>
+                            }
+                            else if (_todos.Count == 0)
+                            {
+                                <div class="text-muted">No todos for this user.</div>
+                            }
+                            else
+                            {
+                                <ul class="list-group">
+                                    @foreach (var t in _todos)
+                                    {
+                                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="@(t.IsDone ? "text-decoration-line-through text-muted" : string.Empty)">@t.Item</span>
+                                                <small class="text-muted ms-2">(@t.CprNr)</small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="form-check me-2">
+                                                    <input class="form-check-input" type="checkbox" checked="@t.IsDone" @onchange="(e => ToggleDone(t, ParseBool(e)))" id="chk_@t.Id" />
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-danger" title="Delete todo" @onclick="(() => DeleteTodo(t))">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+
+                        @if (_showDeleteUserConfirm)
+                        {
+                            <div class="alert alert-warning mt-4 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Delete user?</strong>
+                                    <div class="small text-muted">This removes their CPR and todos, then the account.</div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-danger" @onclick="PerformDeleteUser">Delete</button>
+                                    <button class="btn btn-sm btn-outline-secondary" @onclick="(() => _showDeleteUserConfirm = false)">Cancel</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool _isLoading = true;
+    private string _currentUserId = string.Empty;
+    private string _selectedUserId = string.Empty;
+    private bool _selectedUserHasNoCpr;
+    private bool _showDeleteUserConfirm;
+    private string _userIdPendingDeletion = string.Empty;
+    private string _pageError = string.Empty;
+
+    private List<ApplicationUser> _users = new();
+    private List<TodoApp.TodoData.Todo> _todos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _currentUserId = authState.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+
+        // Load all users except the current admin
+        _users = await UserManager.Users
+            .Where(u => u.Id != _currentUserId)
+            .OrderBy(u => u.Email)
+            .ToListAsync();
+
+        _isLoading = false;
+    }
+
+    private async Task LoadUserTodos(string userId)
+    {
+        _pageError = string.Empty;
+        _selectedUserId = userId;
+        _selectedUserHasNoCpr = false;
+        _todos.Clear();
+        try
+        {
+            var cpr = await CprService.GetCprAsync(userId);
+            if (cpr is null)
+            {
+                _selectedUserHasNoCpr = true;
+                return;
+            }
+            _todos = await TodoService.GetTodosAsync(cpr.CprNr);
+        }
+        catch (Exception ex)
+        {
+            _pageError = $"Failed to load user todos: {ex.Message}";
+        }
+    }
+
+    private static bool ParseBool(ChangeEventArgs e)
+    {
+        if (e.Value is bool b) return b;
+        return bool.TryParse(e.Value?.ToString(), out var parsed) && parsed;
+    }
+
+    private async Task ToggleDone(TodoApp.TodoData.Todo todo, bool isDone)
+    {
+        try
+        {
+            var ok = await TodoService.SetDoneAsync(todo.Id, isDone);
+            if (ok) todo.IsDone = isDone;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogWarning(ex, "Failed to toggle todo {TodoId}", todo.Id);
+            _pageError = "Failed to update todo.";
+        }
+    }
+
+    private async Task DeleteTodo(TodoApp.TodoData.Todo todo)
+    {
+        try
+        {
+            var ok = await TodoService.DeleteAsync(todo.Id);
+            if (ok) _todos.Remove(todo);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogWarning(ex, "Failed to delete todo {TodoId}", todo.Id);
+            _pageError = "Failed to delete todo.";
+        }
+    }
+
+    private void ConfirmDeleteUser(string userId)
+    {
+        _userIdPendingDeletion = userId;
+        _showDeleteUserConfirm = true;
+    }
+
+    private async Task PerformDeleteUser()
+    {
+        if (string.IsNullOrEmpty(_userIdPendingDeletion)) return;
+        _showDeleteUserConfirm = false;
+        _pageError = string.Empty;
+        try
+        {
+            // Remove CPR (+ cascade todos) first
+            _ = await CprService.DeleteCprByUserIdAsync(_userIdPendingDeletion);
+            // Then remove Identity user
+            var user = await UserManager.FindByIdAsync(_userIdPendingDeletion);
+            if (user is not null)
+            {
+                var res = await UserManager.DeleteAsync(user);
+                if (!res.Succeeded)
+                {
+                    _pageError = string.Join("; ", res.Errors.Select(e => e.Description));
+                    return;
+                }
+                _users.RemoveAll(u => u.Id == _userIdPendingDeletion);
+                if (_selectedUserId == _userIdPendingDeletion)
+                {
+                    _selectedUserId = string.Empty;
+                    _selectedUserHasNoCpr = false;
+                    _todos.Clear();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _pageError = $"Failed to delete user: {ex.Message}";
+        }
+        finally
+        {
+            _userIdPendingDeletion = string.Empty;
+        }
+    }
+}

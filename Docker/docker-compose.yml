@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: todoapp-docker-postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5433:5432"  # External port 5433 to avoid conflict with existing PostgreSQL
+    volumes:
+      - todoapp-docker-postgres-data:/var/lib/postgresql/data
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+    restart: unless-stopped
+    networks:
+      - todoapp-docker-network
+
+  todoapp:
+    build: .
+    container_name: todoapp-docker-https
+    ports:
+      - "5002:5204"  # Map host 5002 to container 5204 (HTTP)
+      - "5003:7181"  # Map host 5003 to container 7181 (HTTPS)
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__IdentityConnection=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=postgres
+      - ConnectionStrings__TodoConnection=Host=postgres;Port=5432;Database=Todo;Username=postgres;Password=postgres
+    networks:
+      - todoapp-docker-network
+    restart: unless-stopped
+
+volumes:
+  todoapp-docker-postgres-data:
+
+networks:
+  todoapp-docker-network:
+    driver: bridge
