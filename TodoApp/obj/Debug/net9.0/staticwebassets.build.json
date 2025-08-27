@@ -1,1 +1,1382 @@
-{"Version":1,"Hash":"QjcvqVmU7YZJ+EaLFZTfJPbtT94kKblNN1Qg8OwM24Q=","Source":"TodoApp","BasePath":"_content/TodoApp","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[{"Name":"TodoApp\\wwwroot","Source":"TodoApp","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\","BasePath":"_content/TodoApp","Pattern":"**"}],"Assets":[{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\0a1vl6pub5-4qxb26qxa8.gz","SourceId":"TodoApp","SourceType":"Discovered","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\","BasePath":"_content/TodoApp","RelativePath":"css/bootstrap-variables#[.{fingerprint=4qxb26qxa8}]?.css.gz","AssetKind":"All","AssetMode":"All","AssetRole":"Alternative","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\css\\bootstrap-variables.css","AssetTraitName":"Content-Encoding","AssetTraitValue":"gzip","Fingerprint":"haiqkfunc1","Integrity":"Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\css\\bootstrap-variables.css","FileLength":207,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\erhrp8tag8-wio5eym1o3.gz","SourceId":"TodoApp","SourceType":"Computed","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\","BasePath":"_content/TodoApp","RelativePath":"TodoApp#[.{fingerprint=wio5eym1o3}]!.bundle.scp.css.gz","AssetKind":"All","AssetMode":"Reference","AssetRole":"Alternative","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","AssetTraitName":"Content-Encoding","AssetTraitValue":"gzip","Fingerprint":"o0jp0njrgx","Integrity":"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","FileLength":332,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\hq25zse84y-wio5eym1o3.gz","SourceId":"TodoApp","SourceType":"Computed","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\","BasePath":"_content/TodoApp","RelativePath":"TodoApp#[.{fingerprint=wio5eym1o3}]?.styles.css.gz","AssetKind":"All","AssetMode":"CurrentProject","AssetRole":"Alternative","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","AssetTraitName":"Content-Encoding","AssetTraitValue":"gzip","Fingerprint":"o0jp0njrgx","Integrity":"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","FileLength":332,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\uq5bg62ost-4kywy7iv6g.gz","SourceId":"TodoApp","SourceType":"Discovered","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\","BasePath":"_content/TodoApp","RelativePath":"app#[.{fingerprint=4kywy7iv6g}]?.css.gz","AssetKind":"All","AssetMode":"All","AssetRole":"Alternative","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\app.css","AssetTraitName":"Content-Encoding","AssetTraitValue":"gzip","Fingerprint":"zcos8w4b7w","Integrity":"rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\app.css","FileLength":1385,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","SourceId":"TodoApp","SourceType":"Computed","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\","BasePath":"_content/TodoApp","RelativePath":"TodoApp#[.{fingerprint}]?.styles.css","AssetKind":"All","AssetMode":"CurrentProject","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"ScopedCss","AssetTraitValue":"ApplicationBundle","Fingerprint":"wio5eym1o3","Integrity":"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","FileLength":558,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","SourceId":"TodoApp","SourceType":"Computed","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\","BasePath":"_content/TodoApp","RelativePath":"TodoApp#[.{fingerprint}]!.bundle.scp.css","AssetKind":"All","AssetMode":"Reference","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"ScopedCss","AssetTraitValue":"ProjectBundle","Fingerprint":"wio5eym1o3","Integrity":"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","FileLength":558,"LastWriteTime":"2025-08-26T18:00:47+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\app.css","SourceId":"TodoApp","SourceType":"Discovered","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\","BasePath":"_content/TodoApp","RelativePath":"app#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"4kywy7iv6g","Integrity":"9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\app.css","FileLength":2463,"LastWriteTime":"2025-08-26T16:01:43+00:00"},{"Identity":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\css\\bootstrap-variables.css","SourceId":"TodoApp","SourceType":"Discovered","ContentRoot":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\","BasePath":"_content/TodoApp","RelativePath":"css/bootstrap-variables#[.{fingerprint}]?.css","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"4qxb26qxa8","Integrity":"hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\css\\bootstrap-variables.css","FileLength":308,"LastWriteTime":"2025-08-26T17:03:35+00:00"}],"Endpoints":[{"Route":"app.4kywy7iv6g.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\uq5bg62ost-4kywy7iv6g.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.000721500722"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1385"},{"Name":"ETag","Value":"\"rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30=\""}],"EndpointProperties":[{"Name":"fingerprint","Value":"4kywy7iv6g"},{"Name":"label","Value":"app.css"},{"Name":"integrity","Value":"sha256-9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30="}]},{"Route":"app.4kywy7iv6g.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\app.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"2463"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 16:01:43 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"4kywy7iv6g"},{"Name":"label","Value":"app.css"},{"Name":"integrity","Value":"sha256-9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30="}]},{"Route":"app.4kywy7iv6g.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\uq5bg62ost-4kywy7iv6g.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1385"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"fingerprint","Value":"4kywy7iv6g"},{"Name":"label","Value":"app.css.gz"},{"Name":"integrity","Value":"sha256-rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE="}]},{"Route":"app.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\uq5bg62ost-4kywy7iv6g.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.000721500722"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1385"},{"Name":"ETag","Value":"\"rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30=\""}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30="}]},{"Route":"app.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\app.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"2463"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 16:01:43 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-9DR4jqepGIo9Cj7VCYKuZtZqXALX1jWq8UpnuF3uz30="}]},{"Route":"app.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\uq5bg62ost-4kywy7iv6g.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1385"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-rQ06ZVppJMbFntqcFRQT6szW4P5LSAxdi1yON8P8sdE="}]},{"Route":"css/bootstrap-variables.4qxb26qxa8.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\0a1vl6pub5-4qxb26qxa8.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.004807692308"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"207"},{"Name":"ETag","Value":"\"Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0=\""}],"EndpointProperties":[{"Name":"fingerprint","Value":"4qxb26qxa8"},{"Name":"label","Value":"css/bootstrap-variables.css"},{"Name":"integrity","Value":"sha256-hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0="}]},{"Route":"css/bootstrap-variables.4qxb26qxa8.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\css\\bootstrap-variables.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"308"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 17:03:35 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"4qxb26qxa8"},{"Name":"label","Value":"css/bootstrap-variables.css"},{"Name":"integrity","Value":"sha256-hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0="}]},{"Route":"css/bootstrap-variables.4qxb26qxa8.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\0a1vl6pub5-4qxb26qxa8.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"207"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"fingerprint","Value":"4qxb26qxa8"},{"Name":"label","Value":"css/bootstrap-variables.css.gz"},{"Name":"integrity","Value":"sha256-Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM="}]},{"Route":"css/bootstrap-variables.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\0a1vl6pub5-4qxb26qxa8.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.004807692308"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"207"},{"Name":"ETag","Value":"\"Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0=\""}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0="}]},{"Route":"css/bootstrap-variables.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\wwwroot\\css\\bootstrap-variables.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"308"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 17:03:35 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-hIbMbG7JfHa3+2CFYSbMTu/1YI5oQ64NzBPfXud5V/0="}]},{"Route":"css/bootstrap-variables.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\0a1vl6pub5-4qxb26qxa8.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"207"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-Ga+uxDV+iT9zisWBPEMi3HnAN4Q+K4swEyRNvxxzyKM="}]},{"Route":"TodoApp.bundle.scp.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\erhrp8tag8-wio5eym1o3.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.003003003003"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.bundle.scp.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.bundle.scp.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\erhrp8tag8-wio5eym1o3.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg="}]},{"Route":"TodoApp.styles.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\hq25zse84y-wio5eym1o3.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.003003003003"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.styles.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.styles.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\hq25zse84y-wio5eym1o3.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg="}]},{"Route":"TodoApp.wio5eym1o3.bundle.scp.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\erhrp8tag8-wio5eym1o3.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.003003003003"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.bundle.scp.css"},{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.wio5eym1o3.bundle.scp.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\TodoApp.bundle.scp.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.bundle.scp.css"},{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.wio5eym1o3.bundle.scp.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\erhrp8tag8-wio5eym1o3.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.bundle.scp.css.gz"},{"Name":"integrity","Value":"sha256-iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg="}]},{"Route":"TodoApp.wio5eym1o3.styles.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\hq25zse84y-wio5eym1o3.gz","Selectors":[{"Name":"Content-Encoding","Value":"gzip","Quality":"0.003003003003"}],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"W/\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.styles.css"},{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.wio5eym1o3.styles.css","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\scopedcss\\bundle\\TodoApp.styles.css","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"558"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.styles.css"},{"Name":"integrity","Value":"sha256-mL7NE6EY4wa26Zj3Vc6FRBMMvb2cViO8P5nGfCg30cw="}]},{"Route":"TodoApp.wio5eym1o3.styles.css.gz","AssetFile":"C:\\Repos\\TodoApp\\TodoApp\\obj\\Debug\\net9.0\\compressed\\hq25zse84y-wio5eym1o3.gz","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"332"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\"iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg=\""},{"Name":"Last-Modified","Value":"Tue, 26 Aug 2025 18:00:47 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Encoding","Value":"gzip"},{"Name":"Vary","Value":"Content-Encoding"}],"EndpointProperties":[{"Name":"fingerprint","Value":"wio5eym1o3"},{"Name":"label","Value":"TodoApp.styles.css.gz"},{"Name":"integrity","Value":"sha256-iNg5As/k3ztFgmk+Ld5bZ71Vn8MHl9iZFfde2ELErkg="}]}]}
+{
+  "Version": 1,
+  "Hash": "E1RgTeye9UCogtARDCn3L4viJno9lXkuFsPtojZf6fI=",
+  "Source": "TodoApp",
+  "BasePath": "_content/TodoApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "TodoApp/wwwroot",
+      "Source": "TodoApp",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/",
+      "BasePath": "_content/TodoApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/0a1vl6pub5-gbrhxmho8f.gz",
+      "SourceId": "TodoApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "css/bootstrap-variables#[.{fingerprint=gbrhxmho8f}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/css/bootstrap-variables.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "6t690496j7",
+      "Integrity": "RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/css/bootstrap-variables.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-h47k4ezmn6.gz",
+      "SourceId": "TodoApp",
+      "SourceType": "Computed",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "TodoApp#[.{fingerprint=h47k4ezmn6}]!.bundle.scp.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "ka6hjyw5zx",
+      "Integrity": "HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-h47k4ezmn6.gz",
+      "SourceId": "TodoApp",
+      "SourceType": "Computed",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "TodoApp#[.{fingerprint=h47k4ezmn6}]?.styles.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "ka6hjyw5zx",
+      "Integrity": "HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-z4z4fil66m.gz",
+      "SourceId": "TodoApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "app#[.{fingerprint=z4z4fil66m}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/app.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "ywwkd76e4c",
+      "Integrity": "omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/app.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css",
+      "SourceId": "TodoApp",
+      "SourceType": "Computed",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "TodoApp#[.{fingerprint}]?.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "Fingerprint": "h47k4ezmn6",
+      "Integrity": "EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css",
+      "SourceId": "TodoApp",
+      "SourceType": "Computed",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "TodoApp#[.{fingerprint}]!.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "Fingerprint": "h47k4ezmn6",
+      "Integrity": "EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/app.css",
+      "SourceId": "TodoApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "app#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "z4z4fil66m",
+      "Integrity": "Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    },
+    {
+      "Identity": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/css/bootstrap-variables.css",
+      "SourceId": "TodoApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/",
+      "BasePath": "_content/TodoApp",
+      "RelativePath": "css/bootstrap-variables#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "gbrhxmho8f",
+      "Integrity": "jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/bootstrap-variables.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "app.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-z4z4fil66m.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000746825990"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs="
+        }
+      ]
+    },
+    {
+      "Route": "app.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/app.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2426"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs="
+        }
+      ]
+    },
+    {
+      "Route": "app.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-z4z4fil66m.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo="
+        }
+      ]
+    },
+    {
+      "Route": "app.z4z4fil66m.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-z4z4fil66m.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000746825990"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z4z4fil66m"
+        },
+        {
+          "Name": "label",
+          "Value": "app.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs="
+        }
+      ]
+    },
+    {
+      "Route": "app.z4z4fil66m.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/app.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2426"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z4z4fil66m"
+        },
+        {
+          "Name": "label",
+          "Value": "app.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ha4c/mf3tIjkIzt3U2XFuv3DMCeFOA4bXZVCoCwQigs="
+        }
+      ]
+    },
+    {
+      "Route": "app.z4z4fil66m.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/uq5bg62ost-z4z4fil66m.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "z4z4fil66m"
+        },
+        {
+          "Name": "label",
+          "Value": "app.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-omwsJz6KashyhDr7nAom2rmzueOCBM+KT7xvVHfZxUo="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/0a1vl6pub5-gbrhxmho8f.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.005000000000"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "199"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/css/bootstrap-variables.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "295"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/0a1vl6pub5-gbrhxmho8f.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.gbrhxmho8f.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/0a1vl6pub5-gbrhxmho8f.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.005000000000"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "199"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gbrhxmho8f"
+        },
+        {
+          "Name": "label",
+          "Value": "css/bootstrap-variables.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.gbrhxmho8f.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/wwwroot/css/bootstrap-variables.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "295"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gbrhxmho8f"
+        },
+        {
+          "Name": "label",
+          "Value": "css/bootstrap-variables.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jI2e8ScHteA9TMC4edG0kW7nryFeaJUahXNkgJk1bys="
+        }
+      ]
+    },
+    {
+      "Route": "css/bootstrap-variables.gbrhxmho8f.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/0a1vl6pub5-gbrhxmho8f.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gbrhxmho8f"
+        },
+        {
+          "Name": "label",
+          "Value": "css/bootstrap-variables.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RtVig7ulcdvmrpw8Derj6XtUNXk9eVxqgyEfuKmJWAs="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.bundle.scp.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-h47k4ezmn6.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.003067484663"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.bundle.scp.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.bundle.scp.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-h47k4ezmn6.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.bundle.scp.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-h47k4ezmn6.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.003067484663"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.bundle.scp.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/projectbundle/TodoApp.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.bundle.scp.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/erhrp8tag8-h47k4ezmn6.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.bundle.scp.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.styles.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-h47k4ezmn6.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.003067484663"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.styles.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.h47k4ezmn6.styles.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-h47k4ezmn6.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "h47k4ezmn6"
+        },
+        {
+          "Name": "label",
+          "Value": "TodoApp.styles.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.styles.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-h47k4ezmn6.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.003067484663"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.styles.css",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/scopedcss/bundle/TodoApp.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EY0RZyVQxVE6BCJhYkp9H/X4ZXbSFmrWP6CQuVsMMmw="
+        }
+      ]
+    },
+    {
+      "Route": "TodoApp.styles.css.gz",
+      "AssetFile": "/Users/jws/Data/Repos/TodoApp/TodoApp/obj/Debug/net9.0/compressed/hq25zse84y-h47k4ezmn6.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 27 Aug 2025 06:11:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HDWdFXRgtUMJAd8M7I24BfM2DY2TQQbOOx/BxSqfw2o="
+        }
+      ]
+    }
+  ]
+}

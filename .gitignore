@@ -1,0 +1,75 @@
+# .NET build artifacts
+bin/
+obj/
+[Bb]uild/
+[Bb]uilds/
+artifacts/
+
+# Visual Studio / VS for Mac
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / ReSharper
+.idea/
+*.sln.DotSettings.user
+_ReSharper*/
+*.DotSettings.user
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+packages/
+.nuget/packages/
+
+# EF Core Migrations designer backups
+[Mm]igrations/*/*.Designer.cs~
+
+# Node
+node_modules/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Publish outputs
+publish/
+*.pubxml
+*.pubxml.user
+
+# Other tooling caches
+*.pidb
+*.svclog
+*.userprefs
+
+# Local settings
+appsettings.*.local.json
+*.Local.json
+
+# Rider caches
+.idea/.idea.*
+
+# JetBrains additional
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/**/usage.statistics.xml
+**/.idea/**/dictionaries
+**/.idea/**/shelf/
+
+# Temp files
+~$*
+*.tmp
+
