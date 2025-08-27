@@ -24,13 +24,13 @@ COPY --from=build /app/publish .
 RUN mkdir -p /app/certs
 COPY todoapp-cert.pfx /app/certs/
 
-# Set environment variables for certificate - using ports that match the application
-ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_URLS="https://0.0.0.0:7181;http://0.0.0.0:5204"
+# Set environment variables for certificate - Development environment inside container
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_URLS="https://0.0.0.0:5003;http://0.0.0.0:5204"
 ENV Kestrel__Certificates__Default__Path="/app/certs/todoapp-cert.pfx"
 ENV Kestrel__Certificates__Default__Password="TodoApp2024!"
 
 # Expose the ports the application actually uses
-EXPOSE 5204 7181
+EXPOSE 5204 5003
 
 ENTRYPOINT ["dotnet", "TodoApp.dll"]

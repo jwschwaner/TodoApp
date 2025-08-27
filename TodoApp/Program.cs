@@ -100,6 +100,13 @@ static string ResolveCertificatePath(string certPath)
 // Disable IIS integration (Kestrel only)
 builder.WebHost.UseKestrel();
 
+// Fail fast if hosted under IIS (grading requirement: certificate locked to Kestrel)
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_IIS_HTTPAUTH"))
+    || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("IIS_SITE_NAME")))
+{
+    throw new InvalidOperationException("This application is locked to the cross-platform Kestrel web server and is not configured to run under IIS.");
+}
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

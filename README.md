@@ -1,380 +1,89 @@
-# TodoApp - Secure Blazor Todo Application
+# TodoApp - HTTPS-ready Blazor Server (Kestrel + Docker)
 
-A modern Blazor Server application with ASP.NET Core Identity, two-factor authentication, role-based authorization, and HTTPS certificate configuration.
+This repo is configured to run securely over HTTPS both locally (Kestrel) and in a Docker Linux container. Follow these steps to get to a testable state fast.
 
-## Features
+## Prerequisites (Windows)
 
-- **User Authentication & Authorization**: Complete ASP.NET Core Identity implementation
-- **Two-Factor Authentication**: Authenticator app support with QR code generation
-- **Role-Based Access**: Admin and User roles with different permissions
-- **Secure HTTPS**: Self-signed certificate configuration for development
-- **Dual Database Architecture**: Separate databases for Identity and Todo data
-- **Docker Support**: Full containerization with PostgreSQL
-- **Cross-Platform**: Runs on Windows, macOS, and Linux
+- .NET 9 SDK
+- Docker Desktop
 
-## Prerequisites
+## Quick start (automated verification)
 
-### Required Software
-
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [PostgreSQL](https://www.postgresql.org/download/) (if running locally)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for containerized deployment)
-
-### Platform-Specific Prerequisites
-
-#### Windows
-- Visual Studio 2022 (optional, but recommended)
-- Windows PowerShell or Command Prompt
-- IIS (for testing IIS vs Kestrel behavior)
-
-#### macOS
-- Terminal
-- Homebrew (recommended for package management)
-
-#### Linux
-- Terminal with bash support
-
-## Certificate Setup
-
-### Step 1: Create Self-Signed Certificate
-
-The application requires a self-signed HTTPS certificate stored in your user home directory.
-
-#### Windows (PowerShell)
 ```powershell
-# Navigate to user home directory
-cd $env:USERPROFILE
-
-# Create self-signed certificate
-dotnet dev-certs https -ep todoapp-cert.pfx -p "TodoApp2024!"
-
-# Verify certificate creation
-dir todoapp-cert.pfx
+cd C:\Repos\TodoApp
+# Run the full HTTPS verification (cert + secrets + Kestrel + Docker + IIS-negative)
+./Test-HttpsRequirements.ps1
 ```
 
-#### macOS/Linux (Terminal)
-```bash
-# Navigate to user home directory
-cd ~
+Expected: "All HTTPS checks passed." and both endpoints work:
 
-# Create self-signed certificate (use single quotes to avoid shell expansion)
-dotnet dev-certs https -ep ~/todoapp-cert.pfx -p 'TodoApp2024!'
+- Kestrel: https://localhost:7181 (HTTP 5204 redirects)
+- Docker:  https://localhost:5003 (HTTP 5002 redirects)
 
-# Alternative: escape the exclamation mark
-# dotnet dev-certs https -ep ~/todoapp-cert.pfx -p "TodoApp2024\!"
+## Manual steps (Kestrel)
 
-# Verify certificate creation
-ls -la ~/todoapp-cert.pfx
-```
+1. Create a dev cert and trust it, then set user-secrets
 
-### Step 2: Configure User Secrets
+   ```powershell
+   cd C:\Repos\TodoApp
+   ./Create-DevCert.ps1
+   ./Set-UserSecrets.ps1
+   ```
 
-User secrets provide a secure way to store the certificate path and password during development.
+2. Run the app on Kestrel
 
-#### Windows (PowerShell)
+   ```powershell
+   cd .\TodoApp
+   dotnet run
+   ```
+
+Open:
+
+- HTTPS: https://localhost:7181
+- HTTP:  http://localhost:5204 (redirects to HTTPS)
+
+Note: The app is intentionally locked to Kestrel. If run under IIS, it fails fast with a clear error.
+
+## Manual steps (Docker)
+
+1. Build and run with compose
+
+   ```powershell
+   cd C:\Repos\TodoApp\Docker
+   docker compose up --build -d
+   ```
+
+2. Browse the containerized app
+
+- HTTPS: https://localhost:5003
+- HTTP:  http://localhost:5002 (redirects to HTTPS)
+
+If the browser shows "Not secure":
+
+- Ensure the host PFX exists at %USERPROFILE%\todoapp-cert.pfx and is trusted: `dotnet dev-certs https --trust`
+- If the volume mount fails, change the mapping in Docker/docker-compose.yml to an absolute Windows path with forward slashes, e.g.:
+  - `C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/todoapp-cert.pfx:ro`
+
+## What’s configured
+
+- HTTPS redirect enforced in both copies.
+- Kestrel (original app): HTTPS cert path/password read from user-secrets; locked to Kestrel (IIS negative test will fail as required).
+- Docker (Linux): Container listens on HTTPS 5003; uses the mounted host dev cert at /app/certs/todoapp-cert.pfx (trusted on host) so browsers show a secure padlock.
+
+## Automated test script (optional but recommended)
+
 ```powershell
-# Navigate to the TodoApp project directory
-cd path\to\TodoApp
-
-# Initialize user secrets
-dotnet user-secrets init
-
-# Set certificate path and password
-dotnet user-secrets set "Kestrel:Certificates:Default:Path" "%USERPROFILE%\todoapp-cert.pfx"
-dotnet user-secrets set "Kestrel:Certificates:Default:Password" "TodoApp2024!"
-
-# Verify secrets are set
-dotnet user-secrets list
+cd C:\Repos\TodoApp
+# Full suite (fast): cert presence/trust, user-secrets, Kestrel HTTPS+redirect, IIS negative, Docker HTTPS+redirect
+./Test-HttpsRequirements.ps1
 ```
-
-#### macOS/Linux (Terminal)
-```bash
-# Navigate to the TodoApp project directory
-cd path/to/TodoApp
-
-# Initialize user secrets
-dotnet user-secrets init
-
-# Set certificate path and password (use single quotes for password)
-dotnet user-secrets set "Kestrel:Certificates:Default:Path" "~/todoapp-cert.pfx"
-dotnet user-secrets set "Kestrel:Certificates:Default:Password" 'TodoApp2024!'
-
-# Verify secrets are set
-dotnet user-secrets list
-```
-
-## Database Setup
-
-### Local PostgreSQL Setup
-
-1. **Install PostgreSQL** on your system
-2. **Start PostgreSQL service**
-3. **Create databases** using the provided script:
-
-#### Windows (PowerShell)
-```powershell
-# Start Docker with PostgreSQL
-docker-compose up -d
-
-# Or manually create databases in PostgreSQL
-psql -U postgres -c "CREATE DATABASE \"Identity\";"
-psql -U postgres -c "CREATE DATABASE \"Todo\";"
-```
-
-#### macOS/Linux (Terminal)
-```bash
-# Start Docker with PostgreSQL
-docker-compose up -d
-
-# Or manually create databases in PostgreSQL
-psql -U postgres -c "CREATE DATABASE \"Identity\";"
-psql -U postgres -c "CREATE DATABASE \"Todo\";"
-```
-
-### Apply Database Migrations
-
-#### Windows (PowerShell)
-```powershell
-# Update both databases
-.\Update-databases.ps1
-
-# Or manually:
-dotnet ef database update --project TodoApp --context ApplicationDbContext
-dotnet ef database update --project TodoApp --context TodoDbContext
-```
-
-#### macOS/Linux (Terminal)
-```bash
-# Make script executable and run
-chmod +x Update-databases.sh
-./Update-databases.sh
-
-# Or manually:
-dotnet ef database update --project TodoApp --context ApplicationDbContext
-dotnet ef database update --project TodoApp --context TodoDbContext
-```
-
-## Running the Application
-
-### Local Development (Kestrel)
-
-#### Windows (PowerShell)
-```powershell
-cd TodoApp
-dotnet run
-```
-
-#### macOS/Linux (Terminal)
-```bash
-cd TodoApp
-dotnet run
-```
-
-The application will be available at:
-- HTTP: `http://localhost:5204`
-- HTTPS: `https://localhost:7181`
-
-### Docker Deployment
-
-#### Prerequisites for Docker
-- Ensure Docker Desktop is installed and running
-- Certificate must be accessible within the container
-
-#### Windows (PowerShell)
-```powershell
-# Navigate to Docker folder
-cd Docker
-
-# Build the Docker image
-docker build -t todoapp-https .
-
-# Run with docker-compose (includes PostgreSQL)
-docker-compose up -d
-
-# Check container status
-docker ps
-
-# View logs
-docker logs todoapp-https
-```
-
-#### macOS/Linux (Terminal)
-```bash
-# Navigate to Docker folder
-cd Docker
-
-# Build the Docker image
-docker build -t todoapp-https .
-
-# Run with docker-compose (includes PostgreSQL)
-docker-compose up -d
-
-# Check container status
-docker ps
-
-# View logs
-docker logs todoapp-https
-```
-
-The containerized application will be available at:
-- HTTPS: `https://localhost:5001`
-
-## Configuration
-
-### Connection Strings
-
-Update `appsettings.json` with your PostgreSQL connection details:
-
-```json
-{
-  "ConnectionStrings": {
-    "IdentityConnection": "Host=localhost;Port=5432;Database=Identity;Username=postgres;Password=postgres",
-    "TodoConnection": "Host=localhost;Port=5432;Database=Todo;Username=postgres;Password=postgres"
-  }
-}
-```
-
-### HTTPS Configuration
-
-The application is configured to:
-- Automatically redirect HTTP to HTTPS
-- Use the self-signed certificate from user secrets
-- Run on Kestrel server (IIS integration disabled)
-
-## User Roles
-
-The application includes two predefined roles:
-
-### Admin Role
-- Full access to user management
-- Can view and manage all users' todos
-- Access to admin panel at `/admin/users`
-
-### User Role
-- Can manage their own todos
-- Must register CPR number before accessing todos
-- Standard user functionality
 
 ## Troubleshooting
 
-### Common Issues
+- Firefox uses its own CA store; enable `about:config -> security.enterprise_roots.enabled = true`, or import the dev cert.
+- Port conflicts: change host ports in Docker/docker-compose.yml and re-run `docker compose up -d`.
+- To restart clean: `docker compose down` (in Docker folder), then `docker compose up --build -d`.
 
-#### Certificate Not Found
-```
-Error: Unable to configure HTTPS endpoint
-```
-**Solution**: Ensure the certificate exists in your user home directory and user secrets are configured correctly.
+## See also (Docker details)
 
-#### Database Connection Issues
-```
-Error: A connection was not established
-```
-**Solution**: 
-1. Verify PostgreSQL is running
-2. Check connection strings in `appsettings.json`
-3. Ensure databases exist
-
-#### Docker Build Fails
-```
-Error: Certificate not accessible in container
-```
-**Solution**: 
-1. Ensure certificate is copied into Docker image
-2. Check Dockerfile paths
-3. Verify certificate permissions
-
-### Verification Steps
-
-#### 1. Test HTTPS Redirect
-```bash
-curl -I http://localhost:5204
-# Should return 301/302 redirect to https://
-```
-
-#### 2. Test Certificate Loading
-```bash
-curl -k https://localhost:7181
-# Should return HTML content without certificate errors
-```
-
-#### 3. Test Database Connectivity
-- Register a new user
-- Log in and create todos
-- Verify admin functionality
-
-## Development Commands
-
-### Entity Framework Migrations
-
-#### Add New Migration
-```bash
-# Identity context
-dotnet ef migrations add MigrationName --project TodoApp --context ApplicationDbContext
-
-# Todo context  
-dotnet ef migrations add MigrationName --project TodoApp --context TodoDbContext --output-dir TodoData/Migrations
-```
-
-#### Remove Last Migration
-```bash
-# Identity context
-dotnet ef migrations remove --project TodoApp --context ApplicationDbContext
-
-# Todo context
-dotnet ef migrations remove --project TodoApp --context TodoDbContext
-```
-
-### Docker Commands
-
-#### Build Image
-```bash
-docker build -t todoapp-https .
-```
-
-#### Run Container
-```bash
-docker run -d -p 5001:5001 --name todoapp-container todoapp-https
-```
-
-#### Stop and Clean Up
-```bash
-docker-compose down
-docker rmi todoapp-https
-```
-
-## Project Structure
-
-```
-TodoApp/
-├── Components/                 # Blazor components
-│   ├── Account/               # Authentication components
-│   ├── Layout/                # Layout components
-│   └── Pages/                 # Application pages
-├── Data/                      # Identity data context
-├── TodoData/                  # Todo data context and models
-├── Migrations/                # Entity Framework migrations
-├── wwwroot/                   # Static web assets
-├── Docker/                    # Docker deployment files
-├── Docs/                      # Documentation
-└── README.md                  # This file
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project is for educational purposes.
-
-## Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the configuration steps
-3. Ensure all prerequisites are met
-4. Verify certificate and database setup
+- Docker/Docs/README.md (canonical Docker guide in this repo)

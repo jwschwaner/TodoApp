@@ -1,73 +1,58 @@
-# TodoApp Docker Deployment Commands
+# TodoApp Docker (Development) - Compose Deployment
 
-Prerequisites:
-
+Prerequisites
 - Docker Desktop installed and running
-- Certificate file (todoapp-cert.pfx) in the Docker directory
-- Navigate to the Docker directory before running these commands
+- You are in the Docker directory of the repo
+- A trusted dev cert exists on the host (created with `dotnet dev-certs https -ep %USERPROFILE%\todoapp-cert.pfx -p "TodoApp2024!"` and trusted)
 
-## Docker CLI Commands to Deploy TodoApp:
+Quick start
+```powershell
+# Windows PowerShell
+cd Docker
+docker compose up --build -d
+```
 
-1. Navigate to Docker directory:
-   cd Docker
+```bash
+# macOS/Linux
+cd Docker
+# Adjust volume path in docker-compose.yml if needed, then:
+docker compose up --build -d
+```
 
-2. Ensure certificate is present:
-   ls -la todoapp-cert.pfx
+What this does
+- Builds the app image (ASPNETCORE_ENVIRONMENT=Development in the container)
+- Starts PostgreSQL (port 5433 on host -> 5432 in container) and initializes databases
+- Runs TodoApp with ports:
+  - HTTP: 5002 -> 5204 (redirects to HTTPS)
+  - HTTPS: 5003 -> 5003 (container listens on 5003)
+- Mounts the host’s trusted dev cert into the container at `/app/certs/todoapp-cert.pfx` so browsers show a secure connection
 
-3. Build the Docker image:
-   docker build -t todoapp-https .
-
-4. Start the application with PostgreSQL database:
-   docker-compose up -d
-
-5. Check if containers are running:
-   docker ps
-
-6. View application logs:
-   docker logs todoapp-docker-https
-
-7. View database logs:
-   docker logs todoapp-docker-postgres
-
-## Access the Application:
-
+Access the app
 - HTTPS: https://localhost:5003
-- HTTP: http://localhost:5002 (redirects to HTTPS)
+- HTTP:  http://localhost:5002
 
-## Wait for Database Initialization:
+Troubleshooting
+- If the browser still shows “Not secure”:
+  1) Ensure `%USERPROFILE%\todoapp-cert.pfx` exists and is trusted on Windows:
+     ```powershell
+     dotnet dev-certs https --trust
+     ```
+  2) Rebuild and restart containers:
+     ```powershell
+     docker compose down
+     docker compose up --build -d
+     ```
+  3) Verify the cert is mounted in the container:
+     ```powershell
+     docker exec -it todoapp-docker-https ls -l /app/certs/todoapp-cert.pfx
+     ```
+  4) If the mount fails on Windows, replace the `${USERPROFILE}` mapping in docker-compose.yml with an absolute path using forward slashes, e.g.:
+     ```
+     C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/todoapp-cert.pfx:ro
+     ```
+- If ports 5002/5003/5433 are busy on the host, change them in docker-compose.yml and re-run.
 
-The PostgreSQL container needs a few seconds to initialize the databases.
-If you get database connection errors initially, wait 10-15 seconds and try again.
-
-## Stopping the Application:
-
-docker-compose down
-
-## Cleanup (removes containers and images):
-
-docker-compose down --rmi all --volumes
-
-## Troubleshooting:
-
-- If build fails, ensure todoapp-cert.pfx is in the Docker directory
-- If database connection fails, wait a few seconds for PostgreSQL to start
-- Check logs with: docker logs [container-name]
-- Verify network connectivity: docker network ls
-- If certificate issues, verify the certificate file exists and has correct permissions
-
-## Database Access (for debugging):
-
-docker exec -it todoapp-docker-postgres psql -U postgres -d Identity
-docker exec -it todoapp-docker-postgres psql -U postgres -d Todo
-
-## External database access (from host machine):
-
-psql -h localhost -p 5433 -U postgres -d Identity
-psql -h localhost -p 5433 -U postgres -d Todo
-
-## Complete Rebuild (if needed):
-
-docker-compose down --rmi all --volumes
-docker system prune -f
-docker build --no-cache -t todoapp-https .
-docker-compose up -d
+Cleanup
+```powershell
+docker compose down
+```
