@@ -80,7 +80,7 @@ cd path\to\TodoApp
 dotnet user-secrets init
 
 # Set certificate path and password
-dotnet user-secrets set "Kestrel:Certificates:Default:Path" "$env:USERPROFILE\todoapp-cert.pfx"
+dotnet user-secrets set "Kestrel:Certificates:Default:Path" "%USERPROFILE%\todoapp-cert.pfx"
 dotnet user-secrets set "Kestrel:Certificates:Default:Password" "TodoApp2024!"
 
 # Verify secrets are set
