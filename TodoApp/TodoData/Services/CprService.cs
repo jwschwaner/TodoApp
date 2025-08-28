@@ -23,20 +23,40 @@ namespace TodoApp.TodoData.Services
 
         public async Task<bool> CreateCprAsync(string userId, string cprNumber)
         {
+            // Preflight validation to avoid throwing and leaving tracked Added entities behind
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(cprNumber))
+            {
+                return false;
+            }
+
+            // If user already has a CPR, do not add another
+            if (await _context.Cprs.AnyAsync(c => c.UserId == userId))
+            {
+                return false;
+            }
+
+            // Enforce unique CPR number across users
+            if (await _context.Cprs.AnyAsync(c => c.CprNr == cprNumber))
+            {
+                return false;
+            }
+
+            var cpr = new Cpr
+            {
+                UserId = userId,
+                CprNr = cprNumber
+            };
+
             try
             {
-                var cpr = new Cpr
-                {
-                    UserId = userId,
-                    CprNr = cprNumber
-                };
-
                 await _context.Cprs.AddAsync(cpr);
                 await _context.SaveChangesAsync();
                 return true;
             }
             catch
             {
+                // Detach the entity so a failed SaveChanges does not block future attempts
+                try { _context.Entry(cpr).State = EntityState.Detached; } catch { }
                 return false;
             }
         }
