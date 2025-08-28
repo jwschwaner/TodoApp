@@ -37,45 +37,60 @@ function Write-Heading($text) {
   Write-Host "`n=== $text ===" -ForegroundColor Cyan
 }
 
+function Write-TestCaseResult {
+  param(
+    [string]$Name,
+    [string]$Expected,
+    [string]$Actual,
+    [bool]$Pass
+  )
+  Write-Host "[TEST] $Name" -ForegroundColor White
+  Write-Host " - Expected: $Expected" -ForegroundColor DarkGray
+  Write-Host " - Actual:   $Actual" -ForegroundColor DarkGray
+  if ($Pass) {
+    Write-Host " - Result:   PASS" -ForegroundColor Green
+  } else {
+    Write-Host " - Result:   FAIL" -ForegroundColor Red
+  }
+}
+
 function Test-CertFile {
   param([string]$Path,[string]$Password)
   Write-Heading "Checking cert file in user folder"
+  $result = [ordered]@{ Name='Cert file load/trust'; Pass=$false; Subject=''; Trusted=$false; Path=$Path; Error=$null }
   if (-not (Test-Path $Path)) {
-    Write-Host "Missing: $Path" -ForegroundColor Red
-    return $false
+    $result.Error = "Missing: $Path"
+    return $result
   }
   try {
     $pfx = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 $Path, $Password
-    Write-Host ("Loaded PFX. Subject: {0}" -f $pfx.Subject)
-    # Trust verdict (Windows store)
     $chain = New-Object System.Security.Cryptography.X509Certificates.X509Chain
     $trusted = $chain.Build($pfx)
-    Write-Host ("Trusted in OS store: {0}" -f $trusted)
-    return $true
+    $result.Subject = $pfx.Subject
+    $result.Trusted = $trusted
+    $result.Pass = $true
   } catch {
-    Write-Host "Failed to load PFX: $($_.Exception.Message)" -ForegroundColor Red
-    return $false
+    $result.Error = $_.Exception.Message
   }
+  return $result
 }
 
 function Test-UserSecrets {
   param([string]$ProjectDir)
   Write-Heading "Checking user-secrets for Kestrel cert path/password"
+  $res = [ordered]@{ Name='User-secrets has Kestrel cert path/password'; Pass=$false; HasPath=$false; HasPassword=$false; ProjectDir=$ProjectDir }
   Push-Location $ProjectDir
   try {
     $out = dotnet user-secrets list 2>$null
-    if (-not $out) {
-      Write-Host "No secrets found." -ForegroundColor Yellow
-      return $false
+    if ($out) {
+      $res.HasPath = [bool]($out -match 'Kestrel:Certificates:Default:Path')
+      $res.HasPassword = [bool]($out -match 'Kestrel:Certificates:Default:Password')
+      $res.Pass = ($res.HasPath -and $res.HasPassword)
     }
-    $hasPath = [bool]($out -match 'Kestrel:Certificates:Default:Path')
-    $hasPass = [bool]($out -match 'Kestrel:Certificates:Default:Password')
-    Write-Host "Has Path secret: $hasPath"
-    Write-Host "Has Password secret: $hasPass"
-    return ($hasPath -and $hasPass)
   } finally {
     Pop-Location
   }
+  return $res
 }
 
 function Wait-For-TlsReady {
@@ -87,30 +102,32 @@ function Wait-For-TlsReady {
       try {
         $ssl = New-Object System.Net.Security.SslStream($tcp.GetStream(), $false, ({ $true }))
         $ssl.AuthenticateAsClient($TlsHost)
-        if ($ssl.IsAuthenticated) { return $true }
+        if ($ssl.IsAuthenticated) { return @{ Pass=$true; Ms=[int]$sw.Elapsed.TotalMilliseconds } }
       } finally { if ($ssl) { $ssl.Dispose() }; $tcp.Dispose() }
     } catch { }
-    Start-Sleep -Milliseconds 500
+    Start-Sleep -Milliseconds 300
   }
-  return $false
+  return @{ Pass=$false; Ms=[int]$sw.Elapsed.TotalMilliseconds }
 }
 
 function Test-Redirect {
   param([string]$FromUrl,[string]$ExpectedPrefix)
   $resp = $null
+  $status = $null
+  $location = $null
   try {
     $resp = Invoke-WebRequest $FromUrl -UseBasicParsing -MaximumRedirection 0 -ErrorAction SilentlyContinue
+    $status = [int]$resp.StatusCode
+    $location = $resp.Headers['Location']
   } catch {
-    if ($_.Exception.Response) { $resp = $_.Exception.Response }
+    if ($_.Exception.Response) {
+      $resp = $_.Exception.Response
+      $status = [int]$resp.StatusCode
+      $location = $resp.Headers['Location']
+    }
   }
-  if (-not $resp) {
-    Write-Host "No response from $FromUrl" -ForegroundColor Yellow
-    return $false
-  }
-  $code = [int]$resp.StatusCode
-  $loc  = $resp.Headers['Location']
-  Write-Host "Redirect check -> Status: $code, Location: $loc"
-  return ($code -ge 300 -and $code -lt 400 -and $loc -like "$ExpectedPrefix*")
+  $pass = ($resp -ne $null -and $status -ge 300 -and $status -lt 400 -and $location -like "$ExpectedPrefix*")
+  return @{ Name='HTTP->HTTPS redirect'; Pass=$pass; Status=$status; Location=$location; From=$FromUrl; ExpectedPrefix=$ExpectedPrefix }
 }
 
 function Get-RemoteCert {
@@ -134,11 +151,7 @@ function Test-CertMatchAndTrust {
   $match = ($local.Thumbprint -eq $remote.Thumbprint)
   $chain = New-Object System.Security.Cryptography.X509Certificates.X509Chain
   $trusted = $chain.Build($remote)
-  Write-Host "Local Thumb:  $($local.Thumbprint)"
-  Write-Host "Remote Thumb: $($remote.Thumbprint)"
-  Write-Host "Thumbprints match: $match"
-  Write-Host "Remote cert trusted: $trusted"
-  return ($match -and $trusted)
+  return @{ Name='TLS thumbprint match + OS trust'; Pass=($match -and $trusted); LocalThumb=$local.Thumbprint; RemoteThumb=$remote.Thumbprint; Trusted=$trusted; Host=$TlsHost; Port=$Port }
 }
 
 function Start-DockerPostgres {
@@ -149,13 +162,11 @@ function Start-DockerPostgres {
   } finally {
     Pop-Location
   }
-  # Wait for 5433 to accept TCP
   $deadline = (Get-Date).AddSeconds(20)
   while ((Get-Date) -lt $deadline) {
     if ((Test-NetConnection localhost -Port 5433).TcpTestSucceeded) { return $true }
     Start-Sleep -Milliseconds 250
   }
-  Write-Host "Postgres on :5433 did not become ready in time" -ForegroundColor Yellow
   return $false
 }
 
@@ -170,7 +181,6 @@ function Start-KestrelApp {
   $psi.RedirectStandardError = $true
   $psi.UseShellExecute = $false
   $psi.CreateNoWindow = $true
-  # Ensure Dev and point to the Docker Postgres on 5433
   $psi.Environment["ASPNETCORE_ENVIRONMENT"] = "Development"
   $psi.Environment["ConnectionStrings__IdentityConnection"] = "Host=localhost;Port=5433;Database=Identity;Username=postgres;Password=postgres"
   $psi.Environment["ConnectionStrings__TodoConnection"]     = "Host=localhost;Port=5433;Database=Todo;Username=postgres;Password=postgres"
@@ -186,9 +196,8 @@ function Stop-ProcessSafe {
 }
 
 function Resolve-ProjectDir {
-  # Try common locations
   $candidates = @(
-    (Join-Path $PSScriptRoot 'TodoApp')
+    (Join-Path $PSScriptRoot 'TodoApp'),
     (Join-Path $PSScriptRoot 'TodoApp\TodoApp')
   )
   foreach ($c in $candidates) {
@@ -208,54 +217,54 @@ function Test-IISNegative {
   $psi.RedirectStandardError  = $true
   $psi.UseShellExecute = $false
   $psi.CreateNoWindow = $true
-  # Simulate IIS hosting
   $psi.Environment['IIS_SITE_NAME'] = 'TestSite'
   $psi.Environment['ASPNETCORE_IIS_HTTPAUTH'] = '1'
-  # Keep same DB override to avoid unrelated failures
   $psi.Environment['ASPNETCORE_ENVIRONMENT'] = 'Development'
   $psi.Environment['ConnectionStrings__IdentityConnection'] = 'Host=localhost;Port=5433;Database=Identity;Username=postgres;Password=postgres'
   $psi.Environment['ConnectionStrings__TodoConnection']     = 'Host=localhost;Port=5433;Database=Todo;Username=postgres;Password=postgres'
 
   $proc = [System.Diagnostics.Process]::Start($psi)
   try {
-    if (-not $proc.WaitForExit($TimeoutSec * 1000)) {
+    $exited = $proc.WaitForExit($TimeoutSec * 1000)
+    if (-not $exited) {
       try { $proc.Kill() } catch {}
-      Write-Host 'IIS negative test timed out.' -ForegroundColor Red
-      return $false
+      return @{ Name='IIS negative (locked to Kestrel)'; Pass=$false; ExitCode=$null; Reason='Timeout' }
     }
     $stdout = $proc.StandardOutput.ReadToEnd()
     $stderr = $proc.StandardError.ReadToEnd()
     $combined = "$stdout`n$stderr"
     $failedAsExpected = ($proc.ExitCode -ne 0) -and ($combined -match 'locked to the cross-platform Kestrel web server')
-    Write-Host ("ExitCode: {0}" -f $proc.ExitCode)
-    if (-not $failedAsExpected) {
-      Write-Host 'IIS negative test output (tail):' -ForegroundColor Yellow
-      ($combined -split "`r?`n") | Select-Object -Last 30 | ForEach-Object { Write-Host $_ }
-    }
-    return $failedAsExpected
+    return @{ Name='IIS negative (locked to Kestrel)'; Pass=$failedAsExpected; ExitCode=$proc.ExitCode; MatchedMessage=($combined -match 'locked to the cross-platform Kestrel web server') }
   } finally {
     if ($proc -and -not $proc.HasExited) { try { $proc.Kill() } catch {} }
   }
 }
 
 # 1) Cert file
-$okCert = Test-CertFile -Path $CertPath -Password $CertPassword
-if (-not $okCert) { $failed += 'Cert file load/trust' }
+$certRes = Test-CertFile -Path $CertPath -Password $CertPassword
+$certActual = if ($certRes.Pass) { "Loaded '$($certRes.Subject)'; Trusted=$($certRes.Trusted)" } else { $certRes.Error }
+Write-TestCaseResult -Name $certRes.Name -Expected "PFX exists at $($certRes.Path), loads without error, OS trust true/ok" -Actual $certActual -Pass $certRes.Pass
+if (-not $certRes.Pass) { $failed += $certRes.Name }
 
 # 2) User-secrets for original app
 $projDir = Resolve-ProjectDir
 if (-not $projDir) {
-  Write-Host "Could not locate TodoApp.csproj. Checked: .\\TodoApp and .\\TodoApp\\TodoApp" -ForegroundColor Red
+  Write-Host "Project directory not found (checked .\\TodoApp and .\\TodoApp\\TodoApp)" -ForegroundColor Red
   $failed += 'Locate project dir'
 } else {
   Write-Host ("Project directory: {0}" -f $projDir) -ForegroundColor DarkCyan
 }
-$okSecrets = $false
-if ($projDir) { $okSecrets = Test-UserSecrets -ProjectDir $projDir }
-if (-not $okSecrets) { $failed += 'User-secrets (Kestrel cert path/password)' }
+$secretRes = $null
+if ($projDir) { $secretRes = Test-UserSecrets -ProjectDir $projDir }
+if ($secretRes) {
+  $secretActual = "HasPath=$($secretRes.HasPath), HasPassword=$($secretRes.HasPassword)"
+  Write-TestCaseResult -Name $secretRes.Name -Expected "Keys exist in user-secrets (no plaintext shown)" -Actual $secretActual -Pass $secretRes.Pass
+  if (-not $secretRes.Pass) { $failed += $secretRes.Name }
+}
 
-# 2b) Ensure Postgres for Kestrel (uses Docker's postgres at 5433)
+# 2b) Ensure Postgres for Kestrel
 $pgOk = Start-DockerPostgres
+Write-TestCaseResult -Name 'Docker Postgres running for local Kestrel' -Expected '5433 accepts TCP' -Actual ((Test-NetConnection localhost -Port 5433).TcpTestSucceeded) -Pass $pgOk
 if (-not $pgOk) { Write-Host "Continuing, but Kestrel may fail to start due to DB." -ForegroundColor Yellow }
 
 # 3) Kestrel HTTPS + redirect
@@ -263,14 +272,21 @@ if (-not $SkipKestrel) {
   $kProc = $null
   if ($projDir) { $kProc = Start-KestrelApp -ProjectDir $projDir }
   try {
-    if (-not (Wait-For-TlsReady -TlsHost 'localhost' -Port $KestrelHttpsPort -TimeoutSec $StartTimeoutSec)) {
-      Write-Host "Kestrel HTTPS didn't become ready on :$KestrelHttpsPort" -ForegroundColor Red
-      $failed += 'Kestrel HTTPS up'
-    } else {
+    $ready = Wait-For-TlsReady -TlsHost 'localhost' -Port $KestrelHttpsPort -TimeoutSec $StartTimeoutSec
+    $kReadyPass = [bool]$ready.Pass
+    $kReadyActual = if ($kReadyPass) { "TLS handshake ok in $($ready.Ms) ms on :$KestrelHttpsPort" } else { "Not ready after $($ready.Ms) ms on :$KestrelHttpsPort" }
+    Write-TestCaseResult -Name 'Kestrel HTTPS up' -Expected "TLS on https://localhost:$KestrelHttpsPort within ${StartTimeoutSec}s" -Actual $kReadyActual -Pass $kReadyPass
+    if (-not $kReadyPass) { $failed += 'Kestrel HTTPS up' }
+    if ($kReadyPass) {
       $r1 = Test-Redirect -FromUrl ("http://localhost:{0}" -f $KestrelHttpPort) -ExpectedPrefix ("https://localhost:{0}" -f $KestrelHttpsPort)
-      if (-not $r1) { $failed += 'Kestrel HTTP->HTTPS redirect' }
+      $r1Actual = "Status=$($r1.Status), Location=$($r1.Location)"
+      Write-TestCaseResult -Name "Kestrel $($r1.Name)" -Expected ("3xx to https://localhost:{0}/" -f $KestrelHttpsPort) -Actual $r1Actual -Pass $r1.Pass
+      if (-not $r1.Pass) { $failed += 'Kestrel HTTP->HTTPS redirect' }
+
       $r2 = Test-CertMatchAndTrust -LocalPfx $CertPath -Password $CertPassword -TlsHost 'localhost' -Port $KestrelHttpsPort
-      if (-not $r2) { $failed += 'Kestrel TLS (thumbprint/trust)' }
+      $r2Actual = "Local=$($r2.LocalThumb), Remote=$($r2.RemoteThumb), Trusted=$($r2.Trusted)"
+      Write-TestCaseResult -Name "Kestrel $($r2.Name)" -Expected 'Thumbprints equal and OS trust true' -Actual $r2Actual -Pass $r2.Pass
+      if (-not $r2.Pass) { $failed += 'Kestrel TLS (thumbprint/trust)' }
     }
   } finally {
     if ($kProc) { Stop-ProcessSafe -Proc $kProc }
@@ -279,7 +295,12 @@ if (-not $SkipKestrel) {
 
 # 3b) IIS negative test (must fail under IIS)
 $okIisNegative = $false
-if ($projDir) { $okIisNegative = Test-IISNegative -ProjectDir $projDir }
+if ($projDir) {
+  $iisRes = Test-IISNegative -ProjectDir $projDir
+  $okIisNegative = [bool]$iisRes.Pass
+  $iisActual = if ($iisRes.Reason) { $iisRes.Reason } else { "ExitCode=$($iisRes.ExitCode), MatchedMessage=$($iisRes.MatchedMessage)" }
+  Write-TestCaseResult -Name $iisRes.Name -Expected 'Non-zero exit and clear message about Kestrel-only' -Actual $iisActual -Pass $okIisNegative
+}
 if (-not $okIisNegative) { $failed += 'IIS negative test (should fail under IIS)' }
 
 # 4) Docker HTTPS + redirect
@@ -288,22 +309,21 @@ if (-not $SkipDocker) {
   Push-Location Docker
   try {
     docker compose up --build -d | Out-Null
-    if (-not (Wait-For-TlsReady -TlsHost 'localhost' -Port $DockerHttpsPort -TimeoutSec $StartTimeoutSec)) {
-      Write-Host "Docker HTTPS didn't become ready on :$DockerHttpsPort" -ForegroundColor Red
-      $failed += 'Docker HTTPS up'
-    } else {
+    $dReady = Wait-For-TlsReady -TlsHost 'localhost' -Port $DockerHttpsPort -TimeoutSec $StartTimeoutSec
+    $dReadyPass = [bool]$dReady.Pass
+    $dReadyActual = if ($dReadyPass) { "TLS handshake ok in $($dReady.Ms) ms on :$DockerHttpsPort" } else { "Not ready after $($dReady.Ms) ms on :$DockerHttpsPort" }
+    Write-TestCaseResult -Name 'Docker HTTPS up' -Expected "TLS on https://localhost:$DockerHttpsPort within ${StartTimeoutSec}s" -Actual $dReadyActual -Pass $dReadyPass
+    if (-not $dReadyPass) { $failed += 'Docker HTTPS up' }
+    if ($dReadyPass) {
       $d1 = Test-Redirect -FromUrl ("http://localhost:{0}" -f $DockerHttpPort) -ExpectedPrefix ("https://localhost:{0}" -f $DockerHttpsPort)
-      if (-not $d1) {
-        Write-Host "(Docker) Non-redirect response details:" -ForegroundColor Yellow
-        try {
-          $resp = Invoke-WebRequest ("http://localhost:{0}" -f $DockerHttpPort) -UseBasicParsing -MaximumRedirection 0
-          Write-Host ("Status: {0}" -f $resp.StatusCode)
-          $resp.Headers.GetEnumerator() | ForEach-Object { Write-Host ("{0}: {1}" -f $_.Key, $_.Value) }
-        } catch {}
-        $failed += 'Docker HTTP->HTTPS redirect'
-      }
+      $d1Actual = "Status=$($d1.Status), Location=$($d1.Location)"
+      Write-TestCaseResult -Name "Docker $($d1.Name)" -Expected ("3xx to https://localhost:{0}/" -f $DockerHttpsPort) -Actual $d1Actual -Pass $d1.Pass
+      if (-not $d1.Pass) { $failed += 'Docker HTTP->HTTPS redirect' }
+
       $d2 = Test-CertMatchAndTrust -LocalPfx $CertPath -Password $CertPassword -TlsHost 'localhost' -Port $DockerHttpsPort
-      if (-not $d2) { $failed += 'Docker TLS (thumbprint/trust)' }
+      $d2Actual = "Local=$($d2.LocalThumb), Remote=$($d2.RemoteThumb), Trusted=$($d2.Trusted)"
+      Write-TestCaseResult -Name "Docker $($d2.Name)" -Expected 'Thumbprints equal and OS trust true' -Actual $d2Actual -Pass $d2.Pass
+      if (-not $d2.Pass) { $failed += 'Docker TLS (thumbprint/trust)' }
     }
   } finally {
     Pop-Location
