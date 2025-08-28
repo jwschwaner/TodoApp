@@ -1,8 +1,13 @@
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TodoApp.TodoData;
 using TodoApp.TodoData.Services;
 using TodoApp.Tests.Infrastructure;
+using Xunit;
 
 namespace TodoApp.Tests.Integration;
 
@@ -24,15 +29,10 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         var ihash = FindHashingServiceInterface();
         if (ihash == null) return; // pending implementation
 
-        // Build DI: DbContext + CprService + a stub hashing service so we know what hash is used.
         var sc = new ServiceCollection();
         sc.AddDbContext<TodoDbContext>(o => o.UseNpgsql(_fx.ConnectionString));
         sc.AddScoped<CprService>();
-
-        // Use a dynamic stub that returns a recognizable encoded format for the primary method used by CprService.
-        // We'll try to find a PBKDF2 or Bcrypt method on interface; otherwise fall back to Sha2.
-        object stub = new HashingStub();
-        sc.AddSingleton(ihash, stub);
+        sc.AddSingleton<TodoApp.Security.IHashingService>(new HashingStub());
 
         var sp = sc.BuildServiceProvider();
         using var scope = sp.CreateScope();
@@ -63,7 +63,7 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         sc.AddDbContext<TodoDbContext>(o => o.UseNpgsql(_fx.ConnectionString));
         sc.AddScoped<CprService>();
         sc.AddScoped<TodoService>();
-        sc.AddSingleton(ihash, new HashingStub());
+        sc.AddSingleton<TodoApp.Security.IHashingService>(new HashingStub());
 
         var sp = sc.BuildServiceProvider();
         using var scope = sp.CreateScope();
@@ -90,7 +90,7 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         Assert.Empty(byRaw);
     }
 
-    private sealed class HashingStub
+    private sealed class HashingStub : TodoApp.Security.IHashingService
     {
         // Allow any of the expected method names; CprService can choose which to call.
         public string Sha2(string input, string algorithm) => $"STUB:SHA2:{algorithm}:{input}";

@@ -1,14 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Security;
 
 namespace TodoApp.TodoData.Services
 {
     public class CprService
     {
         private readonly TodoDbContext _context;
+        private readonly IHashingService _hashing;
 
-        public CprService(TodoDbContext context)
+        public CprService(TodoDbContext context, IHashingService hashing)
         {
             _context = context;
+            _hashing = hashing;
         }
 
         public async Task<bool> HasCprAsync(string userId)
@@ -23,28 +26,23 @@ namespace TodoApp.TodoData.Services
 
         public async Task<bool> CreateCprAsync(string userId, string cprNumber)
         {
-            // Preflight validation to avoid throwing and leaving tracked Added entities behind
             if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(cprNumber))
             {
                 return false;
             }
 
-            // If user already has a CPR, do not add another
             if (await _context.Cprs.AnyAsync(c => c.UserId == userId))
             {
                 return false;
             }
 
-            // Enforce unique CPR number across users
-            if (await _context.Cprs.AnyAsync(c => c.CprNr == cprNumber))
-            {
-                return false;
-            }
+            // Hash with PBKDF2 and store directly in CprNr
+            var pbkdf2 = _hashing.Pbkdf2Hash(cprNumber, ResolvePbkdf2Iterations(), "SHA256", ResolvePbkdf2SaltBytes());
 
             var cpr = new Cpr
             {
                 UserId = userId,
-                CprNr = cprNumber
+                CprNr = pbkdf2
             };
 
             try
@@ -55,7 +53,6 @@ namespace TodoApp.TodoData.Services
             }
             catch
             {
-                // Detach the entity so a failed SaveChanges does not block future attempts
                 try { _context.Entry(cpr).State = EntityState.Detached; } catch { }
                 return false;
             }
@@ -72,6 +69,20 @@ namespace TodoApp.TodoData.Services
             _context.Cprs.Remove(cpr);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        private static int ResolvePbkdf2Iterations()
+        {
+            var s = Environment.GetEnvironmentVariable("HASHING__CPR__PBKDF2__ITERATIONS");
+            if (int.TryParse(s, out var value) && value > 0) return value;
+            return 100_000;
+        }
+
+        private static int ResolvePbkdf2SaltBytes()
+        {
+            var s = Environment.GetEnvironmentVariable("HASHING__CPR__PBKDF2__SALTBYTES");
+            if (int.TryParse(s, out var value) && value > 0) return value;
+            return 16;
         }
     }
 }

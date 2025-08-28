@@ -29,18 +29,15 @@ namespace TodoApp.TodoData.Migrations
 
                     b.Property<string>("CprNr")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("CprNr")
                         .IsUnique();
 
-                    b.ToTable("Cprs", null, t =>
-                        {
-                            t.HasCheckConstraint("CK_Cpr_CprNr_Format", "\"CprNr\" ~ '^[0-9]{10}$'");
-                        });
+                    b.ToTable("Cprs");
                 });
 
             modelBuilder.Entity("TodoApp.TodoData.Todo", b =>
@@ -52,7 +49,7 @@ namespace TodoApp.TodoData.Migrations
 
                     b.Property<string>("CprNr")
                         .IsRequired()
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
@@ -71,18 +68,13 @@ namespace TodoApp.TodoData.Migrations
             modelBuilder.Entity("TodoApp.TodoData.Todo", b =>
                 {
                     b.HasOne("TodoApp.TodoData.Cpr", "Cpr")
-                        .WithMany("Todos")
+                        .WithMany()
                         .HasForeignKey("CprNr")
                         .HasPrincipalKey("CprNr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cpr");
-                });
-
-            modelBuilder.Entity("TodoApp.TodoData.Cpr", b =>
-                {
-                    b.Navigation("Todos");
                 });
 #pragma warning restore 612, 618
         }

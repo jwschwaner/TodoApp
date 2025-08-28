@@ -12,11 +12,12 @@ public static class DbInitializer
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var todoContext = scope.ServiceProvider.GetRequiredService<TodoData.TodoDbContext>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        // Ensure database is created and migrations are applied
+        // Ensure databases are created and migrations are applied
         context.Database.Migrate();
+        todoContext.Database.Migrate();
 
         // Seed roles
         await SeedRolesAsync(roleManager);

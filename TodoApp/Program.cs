@@ -6,6 +6,7 @@ using TodoApp.Components.Account;
 using TodoApp.Data;
 using TodoApp.TodoData;
 using TodoApp.TodoData.Services;
+using TodoApp.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -132,6 +133,8 @@ builder.Services.AddDbContext<TodoDbContext>(options =>
 builder.Services.AddScoped<CprService>();
 // Register TodoService
 builder.Services.AddScoped<TodoService>();
+// Register hashing service (DI-only access per requirement)
+builder.Services.AddSingleton<IHashingService, HashingService>();
 
 // Configure Identity with roles
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 

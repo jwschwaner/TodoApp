@@ -51,10 +51,7 @@ namespace TodoApp.TodoData
                 
                 entity.Property(c => c.CprNr)
                     .IsRequired()
-                    .HasMaxLength(10);
-                
-                // Using the new ToTable method with HasCheckConstraint
-                entity.ToTable(tb => tb.HasCheckConstraint("CK_Cpr_CprNr_Format", "\"CprNr\" ~ '^[0-9]{10}$'"));
+                    .HasMaxLength(256);
                 
                 entity.HasIndex(c => c.CprNr)
                     .IsUnique();
