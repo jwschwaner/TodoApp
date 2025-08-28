@@ -1,13 +1,8 @@
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TodoApp.TodoData;
 using TodoApp.TodoData.Services;
 using TodoApp.Tests.Infrastructure;
-using Xunit;
 
 namespace TodoApp.Tests.Integration;
 
