@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="c3fcde35-3846-4b9b-a2e4-82f5d02e2edd" name="Julius@JULLESPC 2025-08-28 17:56:01" runUser="JULLESPC\Julius" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-08-28T17:56:01.3405644+02:00" queuing="2025-08-28T17:56:01.3405647+02:00" start="2025-08-28T17:55:59.3679292+02:00" finish="2025-08-28T17:56:08.0053132+02:00" />
+  <TestSettings name="default" id="321930dc-814a-4503-b525-bf75da58d5a8">
+    <Deployment runDeploymentRoot="Julius_JULLESPC_2025-08-28_17_56_01" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="3432018b-3fd3-4f8c-80cd-ac37fe103886" testId="05219f60-af28-701c-2b5b-d5f93211304f" testName="TodoApp.Tests.Integration.TodoDataTests.Database_is_up_and_migrated" computerName="JULLESPC" duration="00:00:00.1492818" startTime="2025-08-28T17:56:07.1079831+02:00" endTime="2025-08-28T17:56:07.1079832+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3432018b-3fd3-4f8c-80cd-ac37fe103886" />
+    <UnitTestResult executionId="474301d3-fd3c-4f9b-9731-b258cf00c788" testId="63710e48-436b-0dfa-8d41-8b07c107c344" testName="TodoApp.Tests.UnitTest1.Test1" computerName="JULLESPC" duration="00:00:00.0013833" startTime="2025-08-28T17:56:00.2117493+02:00" endTime="2025-08-28T17:56:00.2117599+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="474301d3-fd3c-4f9b-9731-b258cf00c788" />
+    <UnitTestResult executionId="c04a2770-ffd6-455d-a125-cc876d42bfb0" testId="ad90c63b-6cd0-2d0c-1044-4677f22b4218" testName="TodoApp.Tests.Integration.TodoDataTests.Can_create_Cpr_and_Todo_and_query_back" computerName="JULLESPC" duration="00:00:00.1749516" startTime="2025-08-28T17:56:07.2837505+02:00" endTime="2025-08-28T17:56:07.2837506+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c04a2770-ffd6-455d-a125-cc876d42bfb0" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="TodoApp.Tests.Integration.TodoDataTests.Database_is_up_and_migrated" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="05219f60-af28-701c-2b5b-d5f93211304f">
+      <Execution id="3432018b-3fd3-4f8c-80cd-ac37fe103886" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.Integration.TodoDataTests" name="Database_is_up_and_migrated" />
+    </UnitTest>
+    <UnitTest name="TodoApp.Tests.UnitTest1.Test1" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="63710e48-436b-0dfa-8d41-8b07c107c344">
+      <Execution id="474301d3-fd3c-4f9b-9731-b258cf00c788" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+    <UnitTest name="TodoApp.Tests.Integration.TodoDataTests.Can_create_Cpr_and_Todo_and_query_back" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="ad90c63b-6cd0-2d0c-1044-4677f22b4218">
+      <Execution id="c04a2770-ffd6-455d-a125-cc876d42bfb0" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.Integration.TodoDataTests" name="Can_create_Cpr_and_Todo_and_query_back" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="05219f60-af28-701c-2b5b-d5f93211304f" executionId="3432018b-3fd3-4f8c-80cd-ac37fe103886" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="63710e48-436b-0dfa-8d41-8b07c107c344" executionId="474301d3-fd3c-4f9b-9731-b258cf00c788" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ad90c63b-6cd0-2d0c-1044-4677f22b4218" executionId="c04a2770-ffd6-455d-a125-cc876d42bfb0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 9.0.7)&#xD;
+[xUnit.net 00:00:00.33]   Discovering: TodoApp.Tests&#xD;
+[xUnit.net 00:00:00.35]   Discovered:  TodoApp.Tests&#xD;
+[xUnit.net 00:00:00.35]   Starting:    TodoApp.Tests&#xD;
+[testcontainers.org 00:00:00.05] Connected to Docker:&#xD;
+  Host: npipe://./pipe/docker_engine&#xD;
+  Server Version: 28.3.2&#xD;
+  Kernel Version: 5.15.167.4-microsoft-standard-WSL2&#xD;
+  API Version: 1.51&#xD;
+  Operating System: Docker Desktop&#xD;
+  Total Memory: 15.20 GB&#xD;
+[testcontainers.org 00:00:00.09] Searching Docker registry credential in CredHelpers&#xD;
+[testcontainers.org 00:00:00.09] Searching Docker registry credential in Auths&#xD;
+[testcontainers.org 00:00:00.09] Searching Docker registry credential in CredsStore&#xD;
+[testcontainers.org 00:00:00.09] Searching Docker registry credential in Auths&#xD;
+[testcontainers.org 00:00:00.19] Docker registry credential https://index.docker.io/v1/ found&#xD;
+[testcontainers.org 00:00:02.94] Docker image testcontainers/ryuk:0.6.0 created&#xD;
+[testcontainers.org 00:00:03.13] Docker container 746f2069b97a created&#xD;
+[testcontainers.org 00:00:03.17] Start Docker container 746f2069b97a&#xD;
+[testcontainers.org 00:00:03.51] Wait for Docker container 746f2069b97a to complete readiness checks&#xD;
+[testcontainers.org 00:00:03.52] Docker container 746f2069b97a ready&#xD;
+[testcontainers.org 00:00:03.69] Docker container 68b31457a725 created&#xD;
+[testcontainers.org 00:00:03.70] Start Docker container 68b31457a725&#xD;
+[testcontainers.org 00:00:03.98] Wait for Docker container 68b31457a725 to complete readiness checks&#xD;
+[testcontainers.org 00:00:03.99] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container 68b31457a725&#xD;
+[testcontainers.org 00:00:05.05] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container 68b31457a725&#xD;
+[testcontainers.org 00:00:06.12] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container 68b31457a725&#xD;
+[testcontainers.org 00:00:06.17] Docker container 68b31457a725 ready&#xD;
+[testcontainers.org 00:00:07.04] Delete Docker container 68b31457a725&#xD;
+[xUnit.net 00:00:08.12]   Finished:    TodoApp.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

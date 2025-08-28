@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="5b1728f4-dfa4-44f4-b445-adbf839d44bd" name="Julius@JULLESPC 2025-08-28 17:59:30" runUser="JULLESPC\Julius" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-08-28T17:59:30.9948454+02:00" queuing="2025-08-28T17:59:30.9948461+02:00" start="2025-08-28T17:59:29.1941077+02:00" finish="2025-08-28T17:59:34.5003829+02:00" />
+  <TestSettings name="default" id="132ae913-bd48-4986-b3dc-cb98098e7913">
+    <Deployment runDeploymentRoot="Julius_JULLESPC_2025-08-28_17_59_30" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="7789dc12-fcb5-4993-88d0-0c0e42503663" testId="ad90c63b-6cd0-2d0c-1044-4677f22b4218" testName="TodoApp.Tests.Integration.TodoDataTests.Can_create_Cpr_and_Todo_and_query_back" computerName="JULLESPC" duration="00:00:00.2003511" startTime="2025-08-28T17:59:33.7806047+02:00" endTime="2025-08-28T17:59:33.7806048+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7789dc12-fcb5-4993-88d0-0c0e42503663" />
+    <UnitTestResult executionId="60fdcf7a-b0c5-411e-a144-d67060778f62" testId="05219f60-af28-701c-2b5b-d5f93211304f" testName="TodoApp.Tests.Integration.TodoDataTests.Database_is_up_and_migrated" computerName="JULLESPC" duration="00:00:00.1449106" startTime="2025-08-28T17:59:33.5794121+02:00" endTime="2025-08-28T17:59:33.5794122+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="60fdcf7a-b0c5-411e-a144-d67060778f62" />
+    <UnitTestResult executionId="e7d65f9f-3ea8-450b-b7f0-7c675d430701" testId="63710e48-436b-0dfa-8d41-8b07c107c344" testName="TodoApp.Tests.UnitTest1.Test1" computerName="JULLESPC" duration="00:00:00.0014017" startTime="2025-08-28T17:59:29.5652627+02:00" endTime="2025-08-28T17:59:29.5652725+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e7d65f9f-3ea8-450b-b7f0-7c675d430701" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="TodoApp.Tests.Integration.TodoDataTests.Database_is_up_and_migrated" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="05219f60-af28-701c-2b5b-d5f93211304f">
+      <Execution id="60fdcf7a-b0c5-411e-a144-d67060778f62" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.Integration.TodoDataTests" name="Database_is_up_and_migrated" />
+    </UnitTest>
+    <UnitTest name="TodoApp.Tests.UnitTest1.Test1" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="63710e48-436b-0dfa-8d41-8b07c107c344">
+      <Execution id="e7d65f9f-3ea8-450b-b7f0-7c675d430701" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+    <UnitTest name="TodoApp.Tests.Integration.TodoDataTests.Can_create_Cpr_and_Todo_and_query_back" storage="c:\repos\todoapp\todoapp.tests\bin\debug\net9.0\todoapp.tests.dll" id="ad90c63b-6cd0-2d0c-1044-4677f22b4218">
+      <Execution id="7789dc12-fcb5-4993-88d0-0c0e42503663" />
+      <TestMethod codeBase="C:\Repos\TodoApp\TodoApp.Tests\bin\Debug\net9.0\TodoApp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="TodoApp.Tests.Integration.TodoDataTests" name="Can_create_Cpr_and_Todo_and_query_back" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="ad90c63b-6cd0-2d0c-1044-4677f22b4218" executionId="7789dc12-fcb5-4993-88d0-0c0e42503663" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="05219f60-af28-701c-2b5b-d5f93211304f" executionId="60fdcf7a-b0c5-411e-a144-d67060778f62" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="63710e48-436b-0dfa-8d41-8b07c107c344" executionId="e7d65f9f-3ea8-450b-b7f0-7c675d430701" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 9.0.7)&#xD;
+[xUnit.net 00:00:00.05]   Discovering: TodoApp.Tests&#xD;
+[xUnit.net 00:00:00.07]   Discovered:  TodoApp.Tests&#xD;
+[xUnit.net 00:00:00.07]   Starting:    TodoApp.Tests&#xD;
+[testcontainers.org 00:00:00.05] Connected to Docker:&#xD;
+  Host: npipe://./pipe/docker_engine&#xD;
+  Server Version: 28.3.2&#xD;
+  Kernel Version: 5.15.167.4-microsoft-standard-WSL2&#xD;
+  API Version: 1.51&#xD;
+  Operating System: Docker Desktop&#xD;
+  Total Memory: 15.20 GB&#xD;
+[testcontainers.org 00:00:00.24] Docker container 1599e1c99fbe created&#xD;
+[testcontainers.org 00:00:00.28] Start Docker container 1599e1c99fbe&#xD;
+[testcontainers.org 00:00:00.61] Wait for Docker container 1599e1c99fbe to complete readiness checks&#xD;
+[testcontainers.org 00:00:00.62] Docker container 1599e1c99fbe ready&#xD;
+[testcontainers.org 00:00:00.79] Docker container ecd482b76ff5 created&#xD;
+[testcontainers.org 00:00:00.80] Start Docker container ecd482b76ff5&#xD;
+[testcontainers.org 00:00:01.11] Wait for Docker container ecd482b76ff5 to complete readiness checks&#xD;
+[testcontainers.org 00:00:01.12] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container ecd482b76ff5&#xD;
+[testcontainers.org 00:00:02.20] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container ecd482b76ff5&#xD;
+[testcontainers.org 00:00:03.26] Execute "pg_isready --host localhost --dbname todo_test --username postgres" at Docker container ecd482b76ff5&#xD;
+[testcontainers.org 00:00:03.30] Docker container ecd482b76ff5 ready&#xD;
+[testcontainers.org 00:00:04.18] Delete Docker container ecd482b76ff5&#xD;
+[xUnit.net 00:00:04.98]   Finished:    TodoApp.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
