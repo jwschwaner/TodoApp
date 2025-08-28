@@ -24,7 +24,7 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public async Task CreateCprAsync_should_store_hashed_value_not_plaintext()
+    public async Task CreateCprAsync_should_store_hashed_fields_not_plaintext()
     {
         var ihash = FindHashingServiceInterface();
         if (ihash == null) return; // pending implementation
@@ -46,11 +46,13 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         var ok = await cprSvc.CreateCprAsync(userId, raw);
         Assert.True(ok);
 
-        // Assert stored value differs from raw and matches stubbed encoding pattern
+        // Assert stored values differ from raw and match stubbed encoding patterns
         var stored = await ctx.Cprs.AsNoTracking().FirstOrDefaultAsync(c => c.UserId == userId);
         Assert.NotNull(stored);
-        Assert.NotEqual(raw, stored!.CprNr);
-        Assert.StartsWith("STUB:", stored!.CprNr);
+        Assert.NotEqual(raw, stored!.CprPbkdf2);
+        Assert.StartsWith("STUB:PBKDF2:", stored!.CprPbkdf2);
+        Assert.NotEqual(raw, stored!.CprBcrypt);
+        Assert.StartsWith("STUB:BCRYPT:", stored!.CprBcrypt);
     }
 
     [Fact]
@@ -78,7 +80,7 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         Assert.True(await cprSvc.CreateCprAsync(userId, raw));
         var cpr = await cprSvc.GetCprAsync(userId);
         Assert.NotNull(cpr);
-        var key = cpr!.CprNr; // hashed
+        var key = cpr!.CprPbkdf2; // hashed key used as FK
 
         // Act: add a todo using the returned (hashed) key
         var todo = await todoSvc.AddTodoAsync(key, "hash-aware todo");

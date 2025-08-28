@@ -166,7 +166,7 @@
                 _selectedUserHasNoCpr = true;
                 return;
             }
-            _todos = await TodoService.GetTodosAsync(cpr.CprNr);
+            _todos = await TodoService.GetTodosAsync(cpr.CprPbkdf2);
         }
         catch (Exception ex)
         {

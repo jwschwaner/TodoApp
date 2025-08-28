@@ -27,14 +27,21 @@ namespace TodoApp.TodoData.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
-                    b.Property<string>("CprNr")
+                    b.Property<string>("CprBcrypt")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("CprKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CprPbkdf2")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("CprNr")
+                    b.HasIndex("CprKey")
                         .IsUnique();
 
                     b.ToTable("Cprs");
@@ -49,7 +56,7 @@ namespace TodoApp.TodoData.Migrations
 
                     b.Property<string>("CprNr")
                         .IsRequired()
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
@@ -70,7 +77,7 @@ namespace TodoApp.TodoData.Migrations
                     b.HasOne("TodoApp.TodoData.Cpr", "Cpr")
                         .WithMany()
                         .HasForeignKey("CprNr")
-                        .HasPrincipalKey("CprNr")
+                        .HasPrincipalKey("CprPbkdf2")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

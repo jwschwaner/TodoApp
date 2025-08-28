@@ -37,7 +37,7 @@ namespace TodoApp.TodoData
                 entity.HasOne(t => t.Cpr)
                     .WithMany()
                     .HasForeignKey(t => t.CprNr)
-                    .HasPrincipalKey(c => c.CprNr)
+                    .HasPrincipalKey(c => c.CprPbkdf2)
                     .OnDelete(DeleteBehavior.Cascade);
                 
                 // Configure the table name
@@ -49,12 +49,14 @@ namespace TodoApp.TodoData
             {
                 entity.HasKey(c => c.UserId);
                 
-                entity.Property(c => c.CprNr)
-                    .IsRequired()
-                    .HasMaxLength(256);
-                
-                entity.HasIndex(c => c.CprNr)
-                    .IsUnique();
+                entity.Property(c => c.CprPbkdf2)
+                    .IsRequired();
+                entity.Property(c => c.CprBcrypt)
+                    .IsRequired();
+                entity.Property(c => c.CprKey)
+                    .IsRequired();
+                entity.HasAlternateKey(c => c.CprPbkdf2);
+                entity.HasIndex(c => c.CprKey).IsUnique();
             });
         }
     }

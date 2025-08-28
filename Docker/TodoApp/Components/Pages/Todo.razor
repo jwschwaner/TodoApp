@@ -119,7 +119,7 @@
                 var cpr = await CprService.GetCprAsync(_userId);
                 if (cpr != null)
                 {
-                    _cprNumber = cpr.CprNr;
+                    _cprNumber = cpr.CprPbkdf2;
                     // Load todos for this CPR
                     _todos = await TodoService.GetTodosAsync(_cprNumber);
                 }

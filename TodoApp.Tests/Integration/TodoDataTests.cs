@@ -47,7 +47,7 @@ public class TodoDataTests : IClassFixture<TestDatabaseFixture>
         Assert.True(await cprSvc.CreateCprAsync(userId, rawCpr));
         var stored = await cprSvc.GetCprAsync(userId);
         Assert.NotNull(stored);
-        var cprKey = stored!.CprNr; // hashed key used as FK
+        var cprKey = stored!.CprPbkdf2; // hashed key used as FK
 
         var todo = await todoSvc.AddTodoAsync(cprKey, "Write tests");
 
@@ -59,7 +59,7 @@ public class TodoDataTests : IClassFixture<TestDatabaseFixture>
         Assert.Equal("Write tests", fetched!.Item);
         Assert.False(fetched.IsDone);
         Assert.NotNull(fetched.Cpr);
-        Assert.Equal(cprKey, fetched.Cpr.CprNr);
+        Assert.Equal(cprKey, fetched.Cpr.CprPbkdf2);
     }
 
     private sealed class HashingStub : TodoApp.Security.IHashingService

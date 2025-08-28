@@ -26,23 +26,23 @@ namespace TodoApp.TodoData.Services
 
         public async Task<bool> CreateCprAsync(string userId, string cprNumber)
         {
-            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(cprNumber))
-            {
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(cprNumber)) return false;
+            if (await _context.Cprs.AnyAsync(c => c.UserId == userId)) return false;
 
-            if (await _context.Cprs.AnyAsync(c => c.UserId == userId))
-            {
-                return false;
-            }
+            // Deterministic key for uniqueness across users
+            var cprKey = _hashing.Hmac(cprNumber, ResolveHmacKey(), "SHA256");
+            if (await _context.Cprs.AnyAsync(c => c.CprKey == cprKey)) return false;
 
-            // Hash with PBKDF2 and store directly in CprNr
+            // Required verifiers
             var pbkdf2 = _hashing.Pbkdf2Hash(cprNumber, ResolvePbkdf2Iterations(), "SHA256", ResolvePbkdf2SaltBytes());
+            var bcrypt = _hashing.BcryptHash(cprNumber, 12);
 
             var cpr = new Cpr
             {
                 UserId = userId,
-                CprNr = pbkdf2
+                CprKey = cprKey,
+                CprPbkdf2 = pbkdf2,
+                CprBcrypt = bcrypt
             };
 
             try
@@ -61,11 +61,7 @@ namespace TodoApp.TodoData.Services
         public async Task<bool> DeleteCprByUserIdAsync(string userId)
         {
             var cpr = await _context.Cprs.FirstOrDefaultAsync(c => c.UserId == userId);
-            if (cpr is null)
-            {
-                return false;
-            }
-
+            if (cpr is null) return false;
             _context.Cprs.Remove(cpr);
             await _context.SaveChangesAsync();
             return true;
@@ -83,6 +79,16 @@ namespace TodoApp.TodoData.Services
             var s = Environment.GetEnvironmentVariable("HASHING__CPR__PBKDF2__SALTBYTES");
             if (int.TryParse(s, out var value) && value > 0) return value;
             return 16;
+        }
+
+        private static byte[] ResolveHmacKey()
+        {
+            var b64 = Environment.GetEnvironmentVariable("HASHING__CPR__HMACKEY_BASE64");
+            if (!string.IsNullOrWhiteSpace(b64))
+            {
+                try { return Convert.FromBase64String(b64); } catch { }
+            }
+            return System.Text.Encoding.UTF8.GetBytes("TodoAppDevHmacKey");
         }
     }
 }
