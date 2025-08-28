@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using TodoApp.TodoData;
 using TodoApp.TodoData.Services;
 using TodoApp.Tests.Infrastructure;
-using Xunit;
 
 namespace TodoApp.Tests.Integration;
 
@@ -66,6 +65,9 @@ public class CprHashingTests : IClassFixture<TestDatabaseFixture>
         sc.AddScoped<CprService>();
         sc.AddScoped<TodoService>();
         sc.AddSingleton<TodoApp.Security.IHashingService>(new HashingStub());
+        // Encryption services required by TodoService
+        sc.AddSingleton<TodoApp.Security.IEncryptionService, TodoApp.Security.EncryptionService>();
+        sc.AddSingleton<TodoApp.Security.EncryptionKeyProvider>();
 
         var sp = sc.BuildServiceProvider();
         using var scope = sp.CreateScope();

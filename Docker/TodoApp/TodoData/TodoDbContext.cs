@@ -20,8 +20,9 @@ namespace TodoApp.TodoData
             {
                 entity.HasKey(t => t.Id);
                 entity.Property(t => t.Id).HasDefaultValueSql("gen_random_uuid()");
-                entity.Property(t => t.Item).IsRequired().HasColumnType("text");
                 entity.Property(t => t.CprNr).IsRequired();
+                entity.Property(t => t.EncryptedItem).IsRequired().HasColumnType("bytea");
+                entity.Ignore(t => t.Item);
                 entity.Property(t => t.IsDone).IsRequired();
                 entity.HasOne(t => t.Cpr)
                       .WithMany()
@@ -30,7 +31,7 @@ namespace TodoApp.TodoData
                       .OnDelete(DeleteBehavior.Cascade);
                 entity.ToTable("Todos");
             });
-                
+            
             modelBuilder.Entity<Cpr>(entity =>
             {
                 entity.HasKey(c => c.UserId);

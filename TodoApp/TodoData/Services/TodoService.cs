@@ -1,31 +1,54 @@
 using Microsoft.EntityFrameworkCore;
+using TodoApp.Security;
 
 namespace TodoApp.TodoData.Services
 {
     public class TodoService
     {
         private readonly TodoDbContext _context;
+        private readonly IEncryptionService _enc;
+        private readonly EncryptionKeyProvider _keys;
 
-        public TodoService(TodoDbContext context)
+        public TodoService(TodoDbContext context, IEncryptionService enc, EncryptionKeyProvider keys)
         {
             _context = context;
+            _enc = enc;
+            _keys = keys;
         }
 
         public async Task<List<Todo>> GetTodosAsync(string cprNr, CancellationToken ct = default)
         {
-            return await _context.Todos
+            var list = await _context.Todos
                 .AsNoTracking()
                 .Where(t => t.CprNr == cprNr)
                 .OrderBy(t => t.IsDone)
-                .ThenBy(t => t.Item)
+                .ThenBy(t => t.Id)
                 .ToListAsync(ct);
+
+            // Decrypt each item
+            foreach (var t in list)
+            {
+                try
+                {
+                    var pt = _enc.EnvelopeDecrypt(_keys.PrivateKeyPkcs8, t.EncryptedItem);
+                    t.Item = System.Text.Encoding.UTF8.GetString(pt);
+                }
+                catch
+                {
+                    t.Item = "<decryption failed>";
+                }
+            }
+            return list;
         }
 
         public async Task<Todo> AddTodoAsync(string cprNr, string item, CancellationToken ct = default)
         {
+            var plaintext = System.Text.Encoding.UTF8.GetBytes(item);
+            var envelope = _enc.EnvelopeEncrypt(_keys.PublicKeySpki, plaintext);
             var todo = new Todo
             {
                 CprNr = cprNr,
+                EncryptedItem = envelope,
                 Item = item,
                 IsDone = false
             };
@@ -54,4 +77,3 @@ namespace TodoApp.TodoData.Services
         }
     }
 }
-

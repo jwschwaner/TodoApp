@@ -33,8 +33,10 @@ public class TodoDataTests : IClassFixture<TestDatabaseFixture>
         sc.AddDbContext<TodoDbContext>(o => o.UseNpgsql(_fx.ConnectionString));
         sc.AddScoped<CprService>();
         sc.AddScoped<TodoService>();
-        // Provide a hashing service stub to satisfy the CprService dependency in tests
+        // Hashing + Encryption services
         sc.AddSingleton<TodoApp.Security.IHashingService>(new HashingStub());
+        sc.AddSingleton<TodoApp.Security.IEncryptionService, TodoApp.Security.EncryptionService>();
+        sc.AddSingleton<TodoApp.Security.EncryptionKeyProvider>();
         await using var sp = sc.BuildServiceProvider();
         using var scope = sp.CreateScope();
 
@@ -51,15 +53,24 @@ public class TodoDataTests : IClassFixture<TestDatabaseFixture>
 
         var todo = await todoSvc.AddTodoAsync(cprKey, "Write tests");
 
-        var fetched = await ctx.Todos.Include(t => t.Cpr)
-            .Where(t => t.CprNr == cprKey)
-            .FirstOrDefaultAsync();
+        // Use service to fetch decrypted items
+        var list = await todoSvc.GetTodosAsync(cprKey);
+        Assert.Single(list);
+        var fetched = list.First();
 
         Assert.NotNull(fetched);
         Assert.Equal("Write tests", fetched!.Item);
         Assert.False(fetched.IsDone);
-        Assert.NotNull(fetched.Cpr);
-        Assert.Equal(cprKey, fetched.Cpr.CprPbkdf2);
+
+        // Also confirm relation and encrypted payload exist in DB
+        var dbRow = await ctx.Todos.Include(t => t.Cpr)
+            .Where(t => t.Id == fetched.Id)
+            .FirstOrDefaultAsync();
+        Assert.NotNull(dbRow);
+        Assert.NotNull(dbRow!.EncryptedItem);
+        Assert.True(dbRow.EncryptedItem.Length > 0);
+        Assert.NotNull(dbRow.Cpr);
+        Assert.Equal(cprKey, dbRow.Cpr.CprPbkdf2);
     }
 
     private sealed class HashingStub : TodoApp.Security.IHashingService

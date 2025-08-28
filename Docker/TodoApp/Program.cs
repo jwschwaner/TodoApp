@@ -109,6 +109,10 @@ builder.Services.AddScoped<CprService>();
 builder.Services.AddScoped<TodoService>();
 // Register hashing service (DI-only access per requirement)
 builder.Services.AddSingleton<IHashingService, HashingService>();
+// Register encryption service
+builder.Services.AddSingleton<IEncryptionService, EncryptionService>();
+// Register encryption key provider
+builder.Services.AddSingleton<EncryptionKeyProvider>();
 
 // Configure Identity with roles
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

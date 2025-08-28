@@ -83,5 +83,46 @@ public class EncryptionPolicyPendingTests
             // Accept any thrown error as validation present
         }
     }
-}
 
+    [Fact]
+    public void GenerateAesKey_should_return_random_keys_if_present()
+    {
+        var (iface, impl) = FindEncryptionServiceTypes();
+        if (iface == null || impl == null) return;
+
+        var sc = new ServiceCollection();
+        sc.AddSingleton(iface, impl);
+        var sp = sc.BuildServiceProvider();
+        var svc = sp.GetService(iface);
+        if (svc == null) return;
+
+        var genKey = svc.GetType().GetMethod("GenerateAesKey");
+        if (genKey == null) return;
+
+        var k1 = genKey.Invoke(svc, Array.Empty<object>()) as byte[];
+        var k2 = genKey.Invoke(svc, Array.Empty<object>()) as byte[];
+        if (k1 == null || k2 == null) return;
+        Assert.NotEqual(k1, k2);
+    }
+
+    [Fact]
+    public void GenerateNonce_should_return_unique_nonces_if_present()
+    {
+        var (iface, impl) = FindEncryptionServiceTypes();
+        if (iface == null || impl == null) return;
+
+        var sc = new ServiceCollection();
+        sc.AddSingleton(iface, impl);
+        var sp = sc.BuildServiceProvider();
+        var svc = sp.GetService(iface);
+        if (svc == null) return;
+
+        var genNonce = svc.GetType().GetMethod("GenerateNonce");
+        if (genNonce == null) return;
+
+        var n1 = genNonce.Invoke(svc, Array.Empty<object>()) as byte[];
+        var n2 = genNonce.Invoke(svc, Array.Empty<object>()) as byte[];
+        if (n1 == null || n2 == null) return;
+        Assert.NotEqual(n1, n2);
+    }
+}

@@ -4,7 +4,8 @@ namespace TodoApp.TodoData
     {
         public Guid Id { get; set; }
         public string CprNr { get; set; }
-        public string Item { get; set; }
+        public byte[] EncryptedItem { get; set; }
+        public string Item { get; set; } // decrypted at runtime
         public bool IsDone { get; set; }
         
         // Navigation property

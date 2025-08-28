@@ -24,12 +24,14 @@ namespace TodoApp.TodoData
                 entity.Property(t => t.Id)
                     .HasDefaultValueSql("gen_random_uuid()");
                 
-                entity.Property(t => t.Item)
-                    .IsRequired()
-                    .HasColumnType("text");
-                
                 entity.Property(t => t.CprNr)
                     .IsRequired();
+                
+                entity.Property(t => t.EncryptedItem)
+                    .IsRequired()
+                    .HasColumnType("bytea");
+                
+                entity.Ignore(t => t.Item);
                 
                 entity.Property(t => t.IsDone)
                     .IsRequired();
