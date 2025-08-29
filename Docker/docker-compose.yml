@@ -26,8 +26,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__IdentityConnection=Host=postgres;Port=5432;Database=Identity;Username=postgres;Password=postgres
       - ConnectionStrings__TodoConnection=Host=postgres;Port=5432;Database=Todo;Username=postgres;Password=postgres
+      - Kestrel__Certificates__Default__Path=/app/certs/host/todoapp-cert.pfx
+      - Kestrel__Certificates__Default__Password=TodoApp2024!
     volumes:
-      - "${USERPROFILE}/todoapp-cert.pfx:/app/certs/todoapp-cert.pfx:ro"
+      # Mount host dev cert to a separate path; app will prefer it if present, else fall back to bundled cert
+      - "${USERPROFILE}/todoapp-cert.pfx:/app/certs/host/todoapp-cert.pfx:ro"
     networks:
       - todoapp-docker-network
     restart: unless-stopped

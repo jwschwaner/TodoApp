@@ -62,13 +62,13 @@ If the browser shows "Not secure":
 
 - Ensure the host PFX exists at %USERPROFILE%\todoapp-cert.pfx and is trusted: `dotnet dev-certs https --trust`
 - If the volume mount fails, change the mapping in Docker/docker-compose.yml to an absolute Windows path with forward slashes, e.g.:
-  - `C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/todoapp-cert.pfx:ro`
+  - `C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/host/todoapp-cert.pfx:ro`
 
 ## What’s configured
 
 - HTTPS redirect enforced in both copies.
 - Kestrel (original app): HTTPS cert path/password read from user-secrets; locked to Kestrel (IIS negative test will fail as required).
-- Docker (Linux): Container listens on HTTPS 5003; uses the mounted host dev cert at /app/certs/todoapp-cert.pfx (trusted on host) so browsers show a secure padlock.
+- Docker (Linux): Container listens on HTTPS 5003; uses the mounted host dev cert at /app/certs/host/todoapp-cert.pfx (trusted on host) so browsers show a secure padlock.
 
 ## Automated test script (optional but recommended)
 

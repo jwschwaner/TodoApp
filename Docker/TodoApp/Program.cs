@@ -129,11 +129,23 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 var app = builder.Build();
 
-// Initialize the database
-using (var scope = app.Services.CreateScope())
+// Initialize the database in background after the app starts listening (avoid delaying TLS readiness)
+app.Lifetime.ApplicationStarted.Register(() =>
 {
-    await DbInitializer.Initialize(scope.ServiceProvider);
-}
+    _ = Task.Run(async () =>
+    {
+        try
+        {
+            using var scope = app.Services.CreateScope();
+            await DbInitializer.Initialize(scope.ServiceProvider);
+            Console.WriteLine("Database initialization completed.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Database initialization failed: {ex.Message}");
+        }
+    });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

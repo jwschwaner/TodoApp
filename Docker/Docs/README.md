@@ -25,7 +25,7 @@ What this does
 - Runs TodoApp with ports:
   - HTTP: 5002 -> 5204 (redirects to HTTPS)
   - HTTPS: 5003 -> 5003 (container listens on 5003)
-- Mounts the host’s trusted dev cert into the container at `/app/certs/todoapp-cert.pfx` so browsers show a secure connection
+- Mounts the host’s trusted dev cert into the container at `/app/certs/host/todoapp-cert.pfx` so browsers show a secure connection
 
 Access the app
 - HTTPS: https://localhost:5003
@@ -44,11 +44,11 @@ Troubleshooting
      ```
   3) Verify the cert is mounted in the container:
      ```powershell
-     docker exec -it todoapp-docker-https ls -l /app/certs/todoapp-cert.pfx
+     docker exec -it todoapp-docker-https ls -l /app/certs/host/todoapp-cert.pfx
      ```
   4) If the mount fails on Windows, replace the `${USERPROFILE}` mapping in docker-compose.yml with an absolute path using forward slashes, e.g.:
      ```
-     C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/todoapp-cert.pfx:ro
+     C:/Users/<YourUser>/todoapp-cert.pfx:/app/certs/host/todoapp-cert.pfx:ro
      ```
 - If ports 5002/5003/5433 are busy on the host, change them in docker-compose.yml and re-run.
 
