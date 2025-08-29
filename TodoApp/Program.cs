@@ -144,6 +144,8 @@ builder.Services.AddSingleton<EncryptionKeyProvider>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
     {
         options.SignIn.RequireConfirmedAccount = true;
+        // Enforce minimum password length
+        options.Password.RequiredLength = 8;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()

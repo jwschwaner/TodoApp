@@ -40,7 +40,7 @@ Coverage mapping: HTTPS-Requirements.pdf (HTTP→HTTPS redirect; app serves over
 2) Initial app and authentication
 2.1 Anonymous landing and protected pages
 - Step: With no login session, browse to https://localhost:7181/home.
-  - Expected: You see the NotAuthorized landing content with prominent Register and Sign In buttons.
+  - Expected: You see a landing page, where you can Register or Login.
 - Step: In the address bar, go directly to https://localhost:7181/cpr.
   - Expected: Because CPR page is [Authorize], you’re redirected to the login experience.
 - Step: In the address bar, go directly to https://localhost:7181/todo.
@@ -54,7 +54,29 @@ Coverage mapping: HTTPS-Requirements.pdf (HTTP→HTTPS redirect; app serves over
 - Step: Go to /Account/Login and sign in with your confirmed test user.
   - Expected: You’re authenticated and taken to the app. Home shows “Welcome, <email>!” and user-specific tiles (Profile, Security, Email Settings). You see a link to Admin only if you’re in the Admin role.
 
-Coverage mapping: Initial-app-requirements.pdf (landing page, auth endpoints, protected routes require login).
+2.4 Password policy (minimum 8 characters)
+- Register page (/Account/Register)
+  - Step: Enter a password with 7 characters and submit.
+    - Expected: Inline validation error about length; form does not submit.
+  - Step: Enter a password with 8+ characters and submit.
+    - Expected: Client validation passes; if other fields are valid, account creation proceeds (server also enforces 8+).
+- Change Password (/Account/Manage/ChangePassword)
+  - Step: Enter a new password with 7 characters and submit.
+    - Expected: Inline validation error; no change occurs.
+  - Step: Enter a new password with 8+ characters and submit.
+    - Expected: Password updated and success status shown.
+- Reset Password (/Account/ResetPassword)
+  - Step: Use a reset link, enter 7 characters and submit.
+    - Expected: Inline validation error; no reset performed.
+  - Step: Enter 8+ characters and submit.
+    - Expected: Password reset succeeds and confirmation shown.
+- Set Password (/Account/Manage/SetPassword)
+  - Step: Enter 7 characters and submit.
+    - Expected: Inline validation error; password not set.
+  - Step: Enter 8+ characters and submit.
+    - Expected: Password is set and success status shown.
+
+Coverage mapping: Initial-app-requirements.pdf (auth UX); Local policy: minimum password length 8 is enforced client- and server-side.
 
 ---
 
@@ -142,7 +164,7 @@ Coverage mapping: Hashing-requirements.pdf; Symetrisk_asymetrisk_kryptering-requ
 7) Docker (client checks, optional)
 - Step: Bring up Docker app: `cd Docker && docker compose up --build -d`
   - Expected: After a short wait, https://localhost:5003 is reachable; http://localhost:5002 redirects to HTTPS.
-- Step: Repeat key client flows on https://localhost:5003: login, CPR, todos.
+- Step: Repeat key client flows on https://localhost:5003: login, password policy checks (2.4), CPR, todos.
   - Expected: Identical behavior to Kestrel instance, including secure padlock.
 
 Coverage mapping: HTTPS-Requirements.pdf (Docker HTTPS + redirect mirrors Kestrel).
@@ -163,6 +185,7 @@ Requirements coverage summary
 - Initial-app-requirements.pdf
   - Anonymous landing with Register/Login: Covered (2.1)
   - Protected routes require auth: Covered (2.1)
+  - Password policy: minimum 8 characters on all auth forms: Covered (2.4)
   - Basic navigation and pages (Home/CPR/Todo): Covered (2–4)
   - RBAC (Admin area visibility and restriction): Covered (5)
 - HTTPS-Requirements.pdf
@@ -178,4 +201,3 @@ Requirements coverage summary
 
 Notes
 - Some server internals (actual cryptographic algorithms, key management, IIS lockout) can’t be directly proven via client steps; they’re validated by the provided automation and integration tests. Use this client plan to demonstrate observable outcomes that correspond to those requirements.
-
